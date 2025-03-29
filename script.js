@@ -2,16 +2,25 @@ const POKE_URL = "https://pokeapi.co/api/v2/"
 
 function init() {
     getPokeAPI("pokemon")
+    getPokeAPI("")
+//    getPokeAPI("pokemon/4/")
+//    getPokeAPISprites()
 }
 
-async function getPokeAPI(path="") {
-    const response = await fetch (POKE_URL+path+"/?offset=0&limit=60")
-    console.log(response);
-    const responseRef = await response.json()
+async function getPokeAPI(path="",){
+    const response = await fetch (POKE_URL+path+"/?offset=0&limit=20")
+    let responseRef = await response.json()
+    let PokeAPI = responseRef.results;
     console.log(responseRef);
-    console.log(responseRef.results[3]);
-    
+    let mainContent = document.getElementById('main')
+
+    for (let PokeIndex = 0; PokeIndex < PokeAPI.length; PokeIndex++) {
+        let element = PokeAPI[PokeIndex];
+        mainContent.innerHTML += PokedexTemplate(element,PokeIndex)
+    }
 }
+
+
 /* load limited cards (20?) */
 
 
