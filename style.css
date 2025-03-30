@@ -3,8 +3,9 @@
 /* Style of PokemonCard */
 
 .card{
-    width: fit-content !important;
+  width: fit-content !important;
 }
+
 .card-img-top {
   width: 144px !important;
   height: 144px !important;
@@ -12,16 +13,12 @@
 
 .card:hover{
     background-color: rgb(0, 0, 0, 0.2);
+    border-radius: 50%;
 }
 
 .card:hover > .card-img-top{
     position: relative;
     top: -16px;
-}
-
-#main {
-  display: flex;
-  flex-wrap: wrap;
 
 }
 
