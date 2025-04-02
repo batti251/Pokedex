@@ -1,4 +1,8 @@
 html {
   scroll-behavior: smooth;
+  height: 100vh !important;
 }
 
+body{
+  height: 100vh !important;
+}

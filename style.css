@@ -11,12 +11,12 @@
   height: 144px !important;
 }
 
-.card:hover{
+.menu:hover{
     background-color: rgb(0, 0, 0, 0.2);
     border-radius: 50%;
 }
 
-.card:hover > .card-img-top{
+.menu:hover > .card-img-top{
     position: relative;
     top: -16px;
 
