@@ -1,10 +1,33 @@
-function PokedexTemplate(element, PokemonID) {
+function PokedexTemplate(element, PokemonID, newSource) {
+console.log(newSource);
+console.log(newSource.types);
+
+
+
+async function getLogo(){
+  let types = Object.values(newSource.types)
+for (let index = 0; index < types.length; index++) {
+  const element = types[index].type.url;
+  const response = await fetch(element);
+  let responseRef = await response.json();
+  let typeIcon = responseRef.sprites["generation-vii"]["lets-go-pikachu-lets-go-eevee"].name_icon
+console.log(typeIcon);
+}
+}
+
+getLogo()
+
 
   return `
   <div class="col-2" onclick="openPokeCard(this,${PokemonID})">
         <div class="card " style="width: 18rem;">
           <h5 class="card-title">${element.name}</h5>
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${PokemonID}.png" class="card-img-top" alt="...">
+             <div class="card-body">
+    <p class="card-text">
+     <img src="" class="card-img-top" alt="...">
+    </p>
+  </div>
         </div>
         </div>
       `;

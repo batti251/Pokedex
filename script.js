@@ -14,23 +14,25 @@ async function getPokeAPI(path = "", offset = "", limit = "") {
   let PokeAPI = responseRef.results;
   let mainContent = document.getElementById("main");
   loopPokemon(PokeAPI, mainContent);
+
 }
 
-async function loopPokemon(PokeAPI, mainContent) {
+async function loopPokemon(PokeAPI, mainContent, typeIcon) {
   for (let PokeIndex = 0; PokeIndex < PokeAPI.length; PokeIndex++) {
     let element = PokeAPI[PokeIndex];
     let PokemonID = element.url.split("/").slice(-2, -1);
     let PokemonInfoSource = await fetch(element.url);
     let newSource = await PokemonInfoSource.json();
-    console.log(newSource);
-    
-    mainContent.innerHTML += PokedexTemplate(
+     mainContent.innerHTML += PokedexTemplate(
       element,
       PokemonID,
-      PokemonInfoSource
+      newSource,
+      typeIcon
     );
-  }
-}
+  }}
+
+
+
 
 let start = 12;
 async function loadMorePokemon() {
@@ -50,7 +52,14 @@ async function loadMorePokemon() {
                 - generation encounter?
                 - 
             */
+
+
+/* Close Pokecard */                
 function openPokeCard(x, PokemonID) {
   let PokeCard = document.getElementById("main");
   PokeCard.outerHTML += pokeCardTemplate(PokemonID);
 }
+
+
+/* URL für Type */
+/* https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/3.png */
