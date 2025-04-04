@@ -1,45 +1,118 @@
 const POKE_URL = "https://pokeapi.co/api/v2/";
 const POKEPIC_URL = "https://pokeapi.co/api/v2/pokemon/";
+let PokemonID = [];
+let PokemonIDRef = "";
+let string = "";
 
 function init() {
-  getPokeAPI("pokemon", 0, 12);
-
+  getPokeAPI("pokemon", 0, 3);
 }
 
+/* fetch für Pokemon ID */
 async function getPokeAPI(path = "", offset = "", limit = "") {
-  const response = await fetch(
-    POKE_URL + path + "/?offset=" + offset + "&limit=" + limit
-  );
+  const response = await fetch(POKE_URL + path + "/?offset=" + offset + "&limit=" + limit);
   let responseRef = await response.json();
   let PokeAPI = responseRef.results;
-  let mainContent = document.getElementById("main");
-  loopPokemon(PokeAPI, mainContent);
-
+  for (let index = 0; index < PokeAPI.length; index++) {
+    PokemonIDRef = PokeAPI[index].url.split("/").splice(-2, 1);
+    string = PokemonIDRef.toString();
+    PokemonID.push(string);
+  }
+  console.log(PokemonID);
+  await getPokeTypes(PokemonID);
+  await getPokeStats(PokemonID); 
+  await getPokeWeights(PokemonID);
+  await getPokeSprite(PokemonID)
+  await getPokeAbilities(PokemonID);
+   /*getPokeMoves(PokemonID); */
 }
 
-async function loopPokemon(PokeAPI, mainContent, typeIcon) {
-  for (let PokeIndex = 0; PokeIndex < PokeAPI.length; PokeIndex++) {
-    let element = PokeAPI[PokeIndex];
-    let PokemonID = element.url.split("/").slice(-2, -1);
-    let PokemonInfoSource = await fetch(element.url);
-    let newSource = await PokemonInfoSource.json();
-     mainContent.innerHTML += PokedexTemplate(
-      element,
-      PokemonID,
-      newSource,
-      typeIcon
-    );
-  }}
+async function getPromise(params) {
+  
+}
+
+async function getPokeTypes(PokemonID) {
+  for (let index = 0; index < PokemonID.length; index++) {
+    const element = PokemonID[index];
+    const response = await fetch(POKEPIC_URL + element);
+    let responseRef = await response.json();
+    console.log(responseRef);
+    let PokeTypes = {
+      "id": element,
+      "types": {
+      "type1": responseRef.types[0].type.name,
+      "type2": responseRef.types[1].type.name}
+    };
+    console.log(PokeTypes);
+    }
+}
+
+ async function getPokeStats(PokemonID) {
+  for (let index = 0; index < PokemonID.length; index++) {
+    const element = PokemonID[index];
+    const response = await fetch(POKEPIC_URL + element);
+    let responseRef = await response.json();
+    let PokeStats = {
+      "id": element,
+      "stats":{
+      "hp": responseRef.stats[0].base_stat,
+      "attack": responseRef.stats[1].base_stat,
+      "defense": responseRef.stats[2].base_stat,
+      "special-defense": responseRef.stats[3].base_stat,
+      "special-attack": responseRef.stats[4].base_stat,
+      "speed": responseRef.stats[5].base_stat}
+    };
+    console.log(PokeStats);
+    }
+} 
+
+
+async function getPokeWeights(PokemonID) {
+  for (let index = 0; index < PokemonID.length; index++) {
+    const element = PokemonID[index];
+    const response = await fetch(POKEPIC_URL + element);
+    let responseRef = await response.json();
+    let PokeStats = {
+      "id": element,
+      "weight": responseRef.weight
+    };
+    console.log(PokeStats);
+    }
+} 
 
 
 
+async function getPokeSprite(PokemonID) {
+  for (let index = 0; index < PokemonID.length; index++) {
+    const element = PokemonID[index];
+    const response = await fetch(POKEPIC_URL + element);
+    let responseRef = await response.json();
+    let PokeSprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+element+".png"
+    console.log(PokeSprite);
+    }
+} 
 
-let start = 12;
+async function getPokeAbilities(PokemonID) {
+  for (let index = 0; index < PokemonID.length; index++) {
+    const element = PokemonID[index];
+    const response = await fetch(POKEPIC_URL + element);
+    let responseRef = await response.json();
+    let PokeAbilities = {
+      "id": element,
+      "ability1": responseRef.abilities[0].ability.name,
+      "ability2": responseRef.abilities[1].ability.name
+    };
+    console.log(PokeAbilities);
+    }
+} 
+
+
+let start = 20;
 async function loadMorePokemon() {
   let Button = document.getElementById("loadMoreButton");
   Button.disabled = true;
-  await getPokeAPI("pokemon", start, 12);
-  start += 12;
+  await getPokeAPI("pokemon", start, 20);
+  start += 20;
   Button.disabled = false;
 }
 
@@ -53,13 +126,11 @@ async function loadMorePokemon() {
                 - 
             */
 
-
-/* Close Pokecard */                
-function openPokeCard(x, PokemonID) {
+/* Close Pokecard */
+function openPokeCard(x) {
   let PokeCard = document.getElementById("main");
-  PokeCard.outerHTML += pokeCardTemplate(PokemonID);
+  PokeCard.outerHTML += pokeCardTemplate();
 }
-
 
 /* URL für Type */
 /* https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/3.png */
