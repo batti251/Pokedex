@@ -103,6 +103,8 @@ async function getPokeStats(PokemonID) {
     const element = PokemonID[index];
     const response = await fetch(POKEPIC_URL + element);
     let responseRef = await response.json();
+    console.log(responseRef);
+    
     let PokeStats = {
       id: element,
       stats: {
@@ -127,7 +129,8 @@ async function getPokeWeights(PokemonID) {
     let responseRef = await response.json();
     let pokeWeight = {
       id: element,
-      weight: responseRef.weight,
+      weight: responseRef.weight/10,
+      height: responseRef.height*10,
     };
     weights.push(pokeWeight);
   }
@@ -163,20 +166,28 @@ async function getPokeTypes(PokemonID) {
       types: {
         type1: responseRef.types[0].type.url,
         type2: responseRef.types[1]? responseRef.types[1].type.url : responseRef.types[0].type.url,
+        species: responseRef.species.url
       },
     };
+
+
+    
     const response1 = await fetch(PokeTypes.types.type1);
     let responseRef1 = await response1.json();
     const response2 = await fetch(PokeTypes.types.type2);
     let responseRef2 = await response2.json();
+    const response3 = await fetch(PokeTypes.types.species);
+    let responseRef3 = await response3.json();
 
    PokeTypes = {
     id: element,
     types: {
       type1: responseRef1.sprites["generation-vii"]["lets-go-pikachu-lets-go-eevee"].name_icon,
-      type2: responseRef2.sprites["generation-vii"]["lets-go-pikachu-lets-go-eevee"].name_icon
+      type2: responseRef2.sprites["generation-vii"]["lets-go-pikachu-lets-go-eevee"].name_icon,
+      species: responseRef3.color.name
     },
   };
+  console.log(PokeTypes);
     typeArray.push(PokeTypes);
 
   }
@@ -196,7 +207,9 @@ async function getPokeAbilities(PokemonID) {
       id: element,
       ability1: responseRef.abilities[0].ability.name,
       ability2: responseRef.abilities[1] ? responseRef.abilities[1].ability.name :null ,
+      ability3: responseRef.abilities[2] ? responseRef.abilities[2].ability.name :null ,
     };
+    
     abilities.push(PokeAbilities);
   }
   return abilities;
@@ -212,21 +225,12 @@ async function loadMorePokemon() {
   Button.disabled = false;
 }
 
-/* get PokemonCards
-    get specific url for pokemon v2/pokemon/1  => for Bulbasaur
-    onclick overlay PokemonCard
-        get several Info in this Card€
-            which Info? 
-                - base stats + 
-                - generation encounter?
-                - 
-            */
 
-/* open Pokecard */
-function openPokeCard(x,sprite) {
-let focusCard = document.getElementById('focus-card')
-focusCard.innerHTML += pokeCardTemplate(sprite)
-}
 
-/* URL für Type */
-/* https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/3.png */
+//filter funktion
+
+
+
+//loading spin
+
+//button disable
