@@ -1,5 +1,16 @@
+const maxStats = getMaxStats()
+console.log(maxStats);
+
+
 function PokedexTemplate(element) {
-  console.log(element);
+  const hpPercantage = element.stat.stats.hp / maxStats.hp * 100;
+  const defensePercantage = element.stat.stats.defense / maxStats.defense * 100;
+  const attackPercantage = element.stat.stats.attack / maxStats.attack * 100;
+  const spAttackPercantage = element.stat.stats["special-attack"] / maxStats["special-attack"] * 100;
+  const spDefensePercantage = element.stat.stats["special-defense"] / maxStats["special-defense"] * 100;
+  const speedPercatnage = element.stat.stats.speed / maxStats.speed * 100;
+
+
   return `
 
 <!-- Button trigger modal -->
@@ -63,10 +74,10 @@ function PokedexTemplate(element) {
       <div class="accordion-body">
               <li class="list-group-item">Weight: ${element.weight.weight} kg</li>
               <li class="list-group-item">Height: ${element.weight.height} cm</li>
-              <li class="list-group-item">Ability: ${element.ability.ability1} </li>
-            ${element.ability.ability2 ? ` <li class="list-group-item">Ability : ${element.ability.ability2} </li>`:''}
-            ${element.ability.ability3 ? ` <li class="list-group-item">Ability : ${element.ability.ability3} </li>`:''}
-      </div>
+              <li class="list-group-item">Ability: ${element.ability.ability1}
+              ${element.ability.ability2 ? `,  ${element.ability.ability2} `:''}
+              ${element.ability.ability3 ? `,  ${element.ability.ability3} `:''}</li>
+     </div>
     </div>
   </div>
 
@@ -81,11 +92,36 @@ function PokedexTemplate(element) {
     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#${element.id}accordionExample">
       <div class="accordion-body">
 
+<div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="${element.stat.stats.hp}" aria-valuemin="0" aria-valuemax="${maxStats.hp}">
             <li class="list-group-item">HP: ${element.stat.stats.hp} </li>
-            <li class="list-group-item">Attack: ${element.stat.stats.defense}</li>
+  <div class="progress-bar" style="width: ${hpPercantage}%"></div>
+</div>
+
+<div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="${element.stat.stats.attack}" aria-valuemin="0" aria-valuemax="${maxStats.attack}">
+            <li class="list-group-item">Attack: ${element.stat.stats.attack}</li>
+  <div class="progress-bar" style="width: ${attackPercantage}%"></div>
+</div>
+
+<div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="${element.stat.stats.defense}" aria-valuemin="0" aria-valuemax="${maxStats.defense}">
+            <li class="list-group-item">Defense: ${element.stat.stats.defense} </li>
+  <div class="progress-bar" style="width: ${defensePercantage}%"></div>
+</div>
+
+<div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="${element.stat.stats["special-attack"]}" aria-valuemin="0" aria-valuemax="${maxStats["special-attack"]}">
             <li class="list-group-item">Sp. Attack: ${element.stat.stats["special-attack"]}</li>
+  <div class="progress-bar" style="width: ${spAttackPercantage}%"></div>
+</div>
+
+<div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="${element.stat.stats["special-defense"]}" aria-valuemin="0" aria-valuemax="${maxStats["special-defense"]}">
             <li class="list-group-item">Sp. Defense: ${element.stat.stats["special-defense"]}</li>
+  <div class="progress-bar" style="width: ${spDefensePercantage}%"></div>
+</div>
+
+<div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="${element.stat.stats.speed}" aria-valuemin="0" aria-valuemax="${maxStats.speed}">
             <li class="list-group-item">Speed: ${element.stat.stats.speed}</li>
+  <div class="progress-bar" style="width: ${speedPercatnage}%"></div>
+</div>
+
       </div>
       </div>
     </div>

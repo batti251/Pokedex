@@ -1,6 +1,6 @@
 const POKE_URL = "https://pokeapi.co/api/v2/";
 const POKEPIC_URL = "https://pokeapi.co/api/v2/pokemon/";
-const POKETYPE_URL = "https://pokeapi.co/api/v2/type/"
+const POKETYPE_URL = "https://pokeapi.co/api/v2/type/";
 let PokemonID = [];
 
 function init() {
@@ -20,44 +20,36 @@ async function getPokeAPI(path = "", offset = "", limit = "") {
     PokemonIDRef = PokeAPI[index].url.split("/").splice(-2, 1);
     string = PokemonIDRef.toString();
     PokemonID.push(string);
-
   }
-
-
- // console.log(PokeAPI); 
-
-  /*   initPokeTemplate(PokemonID); */
   loadDataReturns();
-
 }
 
 async function loadDataReturns() {
-  const [types, stats, weights, sprites, abilities,names] = await Promise.all([
+  let spinner = document.getElementById("loadingSpinner");
+  spinner.classList.toggle("collapse");
+  let Button = document.getElementById("loadMoreButton");
+  Button.disabled = true;
+  const [types, stats, weights, sprites, abilities, names] = await Promise.all([
     getPokeTypes(PokemonID),
     getPokeStats(PokemonID),
     getPokeWeights(PokemonID),
     getPokeSprite(PokemonID),
     getPokeAbilities(PokemonID),
-    getPokeNames(PokemonID)
-
+    getPokeNames(PokemonID),
   ]);
-/*   console.log(names);
-  console.log(types),
-  console.log(stats),
-  console.log(weights),
-  console.log(sprites),
-  console.log(abilities) */
-  getData(types, stats, weights, sprites, abilities,names)
+  getData(types, stats, weights, sprites, abilities, names);
+  spinner.classList.toggle("collapse");
+  Button.disabled = false;
 }
 
-function getData(types, stats, weights, sprites, abilities,names){
-  const combinedeData = PokemonID.map(id =>{
-    const type = types.find(type => type.id === id);
-    const stat = stats.find(stat => stat.id === id);
-    const weight = weights.find(weight => weight.id === id);
-    const sprite = sprites.find(sprite => sprite.id === id);
-    const ability = abilities.find(ability => ability.id === id);
-    const name = names.find(name => name.id === id)
+function getData(types, stats, weights, sprites, abilities, names) {
+  const combinedeData = PokemonID.map((id) => {
+    const type = types.find((type) => type.id === id);
+    const stat = stats.find((stat) => stat.id === id);
+    const weight = weights.find((weight) => weight.id === id);
+    const sprite = sprites.find((sprite) => sprite.id === id);
+    const ability = abilities.find((ability) => ability.id === id);
+    const name = names.find((name) => name.id === id);
     return {
       id,
       name,
@@ -65,19 +57,19 @@ function getData(types, stats, weights, sprites, abilities,names){
       stat,
       weight,
       sprite,
-      ability
-    }
-  })
-  renderTemplate(combinedeData)
+      ability,
+    };
+  });
 
+  renderTemplate(combinedeData, getMaxStats);
 }
 
-function renderTemplate(combinedeData){
-  let pokeList = document.getElementById('main')
-  pokeList.innerHTML = ""
+function renderTemplate(combinedeData) {
+  let pokeList = document.getElementById("main");
+  pokeList.innerHTML = "";
   for (let index = 0; index < combinedeData.length; index++) {
     const element = combinedeData[index];
-    pokeList.innerHTML += PokedexTemplate(element)
+    pokeList.innerHTML += PokedexTemplate(element);
   }
 }
 
@@ -96,23 +88,20 @@ async function getPokeNames(PokemonID) {
   return nameArray;
 }
 
-
 async function getPokeStats(PokemonID) {
   let statsArray = [];
   for (let index = 0; index < PokemonID.length; index++) {
     const element = PokemonID[index];
     const response = await fetch(POKEPIC_URL + element);
     let responseRef = await response.json();
-    console.log(responseRef);
-    
     let PokeStats = {
       id: element,
       stats: {
         hp: responseRef.stats[0].base_stat,
         attack: responseRef.stats[1].base_stat,
         defense: responseRef.stats[2].base_stat,
-        "special-defense": responseRef.stats[3].base_stat,
-        "special-attack": responseRef.stats[4].base_stat,
+        "special-attack": responseRef.stats[3].base_stat,
+        "special-defense": responseRef.stats[4].base_stat,
         speed: responseRef.stats[5].base_stat,
       },
     };
@@ -129,8 +118,8 @@ async function getPokeWeights(PokemonID) {
     let responseRef = await response.json();
     let pokeWeight = {
       id: element,
-      weight: responseRef.weight/10,
-      height: responseRef.height*10,
+      weight: responseRef.weight / 10,
+      height: responseRef.height * 10,
     };
     weights.push(pokeWeight);
   }
@@ -142,7 +131,7 @@ async function getPokeSprite(PokemonID) {
   for (let index = 0; index < PokemonID.length; index++) {
     const element = PokemonID[index];
     const response = await fetch(POKEPIC_URL + element);
-    let responseRef = await response.json();
+    await response.json();
     let PokeSprite = {
       id: element,
       link:
@@ -165,37 +154,35 @@ async function getPokeTypes(PokemonID) {
       id: element,
       types: {
         type1: responseRef.types[0].type.url,
-        type2: responseRef.types[1]? responseRef.types[1].type.url : responseRef.types[0].type.url,
-        species: responseRef.species.url
+        type2: responseRef.types[1]? responseRef.types[1].type.url: responseRef.types[0].type.url,
+        species: responseRef.species.url,
       },
     };
 
-
-    
     const response1 = await fetch(PokeTypes.types.type1);
     let responseRef1 = await response1.json();
     const response2 = await fetch(PokeTypes.types.type2);
     let responseRef2 = await response2.json();
     const response3 = await fetch(PokeTypes.types.species);
     let responseRef3 = await response3.json();
-
-   PokeTypes = {
-    id: element,
-    types: {
-      type1: responseRef1.sprites["generation-vii"]["lets-go-pikachu-lets-go-eevee"].name_icon,
-      type2: responseRef2.sprites["generation-vii"]["lets-go-pikachu-lets-go-eevee"].name_icon,
-      species: responseRef3.color.name
-    },
-  };
-  console.log(PokeTypes);
+    PokeTypes = {
+      id: element,
+      types: {
+        type1:
+          responseRef1.sprites["generation-vii"][
+            "lets-go-pikachu-lets-go-eevee"
+          ].name_icon,
+        type2:
+          responseRef2.sprites["generation-vii"][
+            "lets-go-pikachu-lets-go-eevee"
+          ].name_icon,
+        species: responseRef3.color.name,
+      },
+    };
     typeArray.push(PokeTypes);
-
   }
   return typeArray;
 }
-
-
-
 
 async function getPokeAbilities(PokemonID) {
   let abilities = [];
@@ -206,10 +193,13 @@ async function getPokeAbilities(PokemonID) {
     let PokeAbilities = {
       id: element,
       ability1: responseRef.abilities[0].ability.name,
-      ability2: responseRef.abilities[1] ? responseRef.abilities[1].ability.name :null ,
-      ability3: responseRef.abilities[2] ? responseRef.abilities[2].ability.name :null ,
+      ability2: responseRef.abilities[1]
+        ? responseRef.abilities[1].ability.name
+        : "",
+      ability3: responseRef.abilities[2]
+        ? responseRef.abilities[2].ability.name
+        : "",
     };
-    
     abilities.push(PokeAbilities);
   }
   return abilities;
@@ -217,20 +207,35 @@ async function getPokeAbilities(PokemonID) {
 
 let start = 20;
 async function loadMorePokemon() {
-
-  let Button = document.getElementById("loadMoreButton");
-  Button.disabled = true;
   await getPokeAPI("pokemon", start, 20);
   start += 20;
-  Button.disabled = false;
+}
+
+function getMaxStats() {
+  const maxStats = {
+    hp: 255,
+    attack: 190,
+    defense: 250,
+    "special-attack": 194,
+    "special-defense": 250,
+    speed: 200,
+  };
+  return maxStats;
 }
 
 
 
-//filter funktion
+/* To-Do's */
 
+//filter function
 
+//more Pokeinfo
+  //evolution? 
+  //attacks?
+  //shiny sprites?
 
-//loading spin
+//optimize functions
 
-//button disable
+//styling
+  //grid template 
+  //card background + overall styling
