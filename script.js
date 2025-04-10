@@ -229,6 +229,34 @@ function getMaxStats() {
 
 //filter function
 
+function filterPokemon(){
+let input = document.getElementById('searchBar')
+let pokeSearch = document.getElementsByClassName('card-title')
+let PokeFilterArray = [];
+console.log(pokeSearch);
+console.log(input.value);
+for (let searchIndex = 0; searchIndex < pokeSearch.length; searchIndex++) {
+  const elementRef = pokeSearch[searchIndex];
+  const element = elementRef.innerHTML
+  PokeFilterArray.push(element);
+
+  if (input.value.length > 2 && element.includes(input.value)) {
+    const filteredPokemon = PokeFilterArray.filter((item) => {
+      return item == element
+    })
+    console.log(filteredPokemon);
+    
+  } 
+
+}
+console.log(PokeFilterArray)
+console.log(pokeSearch);
+
+console.log(input);
+
+  
+}
+
 //more Pokeinfo
   //evolution? 
   //attacks?

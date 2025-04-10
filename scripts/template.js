@@ -1,7 +1,4 @@
 const maxStats = getMaxStats()
-console.log(maxStats);
-
-
 function PokedexTemplate(element) {
   const hpPercantage = element.stat.stats.hp / maxStats.hp * 100;
   const defensePercantage = element.stat.stats.defense / maxStats.defense * 100;
