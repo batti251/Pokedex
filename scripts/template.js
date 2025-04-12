@@ -11,7 +11,7 @@ function PokedexTemplate(element) {
   return `
 
 <!-- Button trigger modal -->
-<div type="button" class="col-2 card menu container-md" data-bs-toggle="modal" data-bs-target="#${element.id}exampleModal" style="width: 242px !important; background-color: ${element.type.types.species}">
+<div type="button" class="col-2 card menu container-md"  id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}exampleModal" style="width: 242px !important; background-color: ${element.type.types.species}">
 <div class="card-body">
     <h5 class="card-title">${element.name.name}</h5>
 </div>
@@ -142,23 +142,6 @@ function PokedexTemplate(element) {
       `;
 }
 
-/* 
-function PokedexTemplate(element) {
-  return `
-  <div  class="col-2 " onclick="openPokeCard(this,'${element.sprite.link}')">
-   <div class="card menu" style="width: 18rem;">
-          <h5 class="card-title">${element.name.name}</h5>
-            <img src=${element.sprite.link} class="card-img-top" alt="...">
-
-    <p class="card-text">
-     <img src="" class="card-img-top" alt="...">${element.type.types.type1}
-     <img src="" class="card-img-top" alt="...">${element.type.types.type2}
-    </p>
-
-    </div>
-        </div>
-      `;
-} */
 
 
 

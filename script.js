@@ -61,7 +61,7 @@ function getData(types, stats, weights, sprites, abilities, names) {
     };
   });
 
-  renderTemplate(combinedeData, getMaxStats);
+  renderTemplate(combinedeData);
 }
 
 function renderTemplate(combinedeData) {
@@ -223,39 +223,26 @@ function getMaxStats() {
   return maxStats;
 }
 
-
-
-/* To-Do's */
-
-//filter function
-
 function filterPokemon(){
 let input = document.getElementById('searchBar')
-let pokeSearch = document.getElementsByClassName('card-title')
-let PokeFilterArray = [];
-console.log(pokeSearch);
-console.log(input.value);
+let pokeSearch = document.getElementsByClassName('container-md')
 for (let searchIndex = 0; searchIndex < pokeSearch.length; searchIndex++) {
   const elementRef = pokeSearch[searchIndex];
-  const element = elementRef.innerHTML
-  PokeFilterArray.push(element);
-
-  if (input.value.length > 2 && element.includes(input.value)) {
-    const filteredPokemon = PokeFilterArray.filter((item) => {
-      return item == element
-    })
-    console.log(filteredPokemon);
-    
+  const h5Ref = elementRef.querySelector("h5")
+  const h5 = h5Ref.innerHTML
+  if (input.value.length < 3) {
+  elementRef.style.display = "block"
+  }
+  else if (input.value.length >= 3  && h5.includes(input.value)) {
+   elementRef.style.display = "block"
+  }
+  else {
+    elementRef.style.display = "none"
+  }
   } 
-
 }
-console.log(PokeFilterArray)
-console.log(pokeSearch);
 
-console.log(input);
-
-  
-}
+/* To-Do's */
 
 //more Pokeinfo
   //evolution? 
