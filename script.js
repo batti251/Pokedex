@@ -7,8 +7,12 @@ function init() {
   getPokeAPI("pokemon", 0, 50);
 }
 
+
+
 /* fetch für Pokemon ID */
 async function getPokeAPI(path = "", offset = "", limit = "") {
+  spinnerShowButtonDisabled()
+
   let PokemonIDRef = "";
   const response = await fetch(POKE_URL + path + "/?offset=" + offset + "&limit=" + limit);
   let responseRef = await response.json();
@@ -17,20 +21,17 @@ async function getPokeAPI(path = "", offset = "", limit = "") {
     PokemonIDRef = PokeAPI[index].url.split("/").splice(-2, 1);
     PokemonID.push(PokemonIDRef.toString());
   }
-   getPokeAPIObj(PokemonID);
+  await getPokeAPIObj(PokemonID);
+  spinnerHideButtonEnabled() 
 }
 
-/* 
-  
- */
-
 async function getPokeAPIObj(PokemonID) {
-  const promises = PokemonID.map(id => fetch(POKEPIC_URL + id).then(res => res.json()))
+  const promises = PokemonID.map(id => fetch(POKEPIC_URL + id).then(response => response.json()))
   const dataPool = await Promise.all(promises)
    combinedData(dataPool)
 }
 
-async function combinedData(dataPool) {
+ function combinedData(dataPool) {
   const combo = dataPool.map(pokemon => {
     return {
       id: pokemon.id,
@@ -47,12 +48,13 @@ async function combinedData(dataPool) {
 }
 
 function renderPokedex(combo) {
-  let pokeList = document.getElementById('main')
-  pokeList.innerHTML = "" 
+  const pokeList = document.getElementById('main');
+  pokeList.innerHTML = "";
+  let html = "";
   for (let index = 0; index < combo.length; index++) {
-   pokeList.innerHTML += PokedexTemplate(combo[index])
+    html += PokedexTemplate(combo[index]);
   }
-
+  pokeList.innerHTML = html;
 }
 
 let start = 50;
@@ -88,14 +90,26 @@ function filterPokemon() {
   }
 }
 
-
-
 function togglePic(sprite,shiny,id) {
   let imgSource = document.getElementById(`${id}modalPic`)
   let check = document.getElementById(`${id}switchCheckDefault`)
   if (check.checked == true) {
     imgSource.src = shiny
   } else {imgSource.src = sprite}
+}
+
+function spinnerShowButtonDisabled() {
+  const spinner = document.getElementById("loadingSpinner");
+  const button = document.getElementById("loadMoreButton");
+  spinner.classList.remove("collapse");
+  button.disabled = true;
+}
+
+function spinnerHideButtonEnabled() {
+  const spinner = document.getElementById("loadingSpinner");
+  const button = document.getElementById("loadMoreButton");
+  spinner.classList.add("collapse");
+  button.disabled = false;
 }
 
 //Spielwiese mit map()
@@ -142,6 +156,8 @@ console.log(types);
 /* To-Do's */
 
 //optimize functions
+
+//clickhandler at PokemonCard! too long
 
 //more Pokeinfo
 //evolution?

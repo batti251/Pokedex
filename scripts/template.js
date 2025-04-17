@@ -6,8 +6,6 @@ function PokedexTemplate(element) {
   const spAttackPercantage = element.stats[3] / maxStats["special-attack"] * 100;
   const spDefensePercantage = element.stats[4] / maxStats["special-defense"] * 100;
   const speedPercantage = element.stats[5] / maxStats.speed * 100; 
-console.log(element);
-console.log(hpPercantage);
 
   return `
 
