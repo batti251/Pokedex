@@ -23,6 +23,7 @@ async function getPokeAPI(path = "", offset = "", limit = "") {
   }
   await getPokeAPIObj(PokemonID);
   spinnerHideButtonEnabled() 
+  
 }
 
 async function getPokeAPIObj(PokemonID) {
@@ -32,19 +33,23 @@ async function getPokeAPIObj(PokemonID) {
 }
 
  function combinedData(dataPool) {
+console.log(dataPool);
+
   const combo = dataPool.map(pokemon => {
     return {
       id: pokemon.id,
       name: pokemon.name,
-      height: pokemon.height,
-      weight: pokemon.height,
+      height: pokemon.height*10,
+      weight: pokemon.weight/10,
       abilities: pokemon.abilities.map(a => a.ability.name),
       sprite: pokemon.sprites.other["official-artwork"]["front_default"],
       shiny: pokemon.sprites.other["official-artwork"]["front_shiny"],
       types: pokemon.types.map(t => t.type.url.split("/").splice(-2, 1)),
       stats: pokemon.stats.map(s => s.base_stat),
+      moves: pokemon.moves.map(m => m.move.name)
     }})
     renderPokedex(combo)
+    PokedexModal(combo)
 }
 
 function renderPokedex(combo) {
@@ -55,6 +60,8 @@ function renderPokedex(combo) {
     html += PokedexTemplate(combo[index]);
   }
   pokeList.innerHTML = html;
+  console.log(combo);
+  
 }
 
 let start = 50;
@@ -157,12 +164,16 @@ console.log(types);
 
 //optimize functions
 
-//clickhandler at PokemonCard! too long
 
 //more Pokeinfo
 //evolution?
 //attacks?
 
+
 //styling
-//grid template
-//card background + overall styling
+  //border-radius list
+    //border ? 
+  //img position center?
+
+
+  //responsive < 576px

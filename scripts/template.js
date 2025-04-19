@@ -10,39 +10,36 @@ function PokedexTemplate(element) {
   return `
 
 <!-- Button trigger modal -->
-<div type="button" class="col-2 card menu container-md"  id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}exampleModal" style="width: 242px !important; background-color: "">
-<div class="card-body">
-    <h5 class="card-title">${element.name}</h5>
+<div type="button" class="col-2 card menu container-md poke-list m-2" id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}exampleModal">
+  <div class="card-body">
+    <div class="d-flex">
+      <img src="${element.sprite}" class="card-img-top position-absolute" alt="Pokemon Sprites">
+      <div class="div-color color-${element.types[0]}"><h5 class="card-title position-absolute">${element.name}</h5></div> 
+      <div class="div-color ${element.types[1] ? 'color-' + element.types[1] : 'color-' + element.types[0]}"></div>
+    </div>
+    <div class="card-footer p-0 d-flex color-${element.types[0]} ">
+      <p class="img"> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[0]}.png" class="" alt=""></p>
+      <p class="m-0 img color-${element.types[1]} "> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" class="" alt=""></p>
+    </div> 
+  </div> 
 </div>
-    <img src="${element.sprite}" class="card-img-top" alt="Pokemon Sprites">
-   
-  
-<div class="row">
-  <div class="col-sm-6 mb-3 mb-sm-0">
-        <p class="img"> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[0]}.png" class="" alt=""></p>
-  </div>
-   <div class="col-sm-6">
-        <p class="img"> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" class="" alt=""></p>
-
-  </div>
-</div>
-
-  </div>
+ 
   
 
     <!-- Modal -->
   <div class="modal fade" id="${element.id}exampleModal" tabindex="-1" aria-labelledby="${element.id}exampleModalLabel" aria-hidden="false">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
+
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="${element.id}exampleModalLabel">${element.name}</h1>
              
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <p><h1 class="fs-5"> Pokedex #${element.id}</h1></p>
+            <h1 class="fs-5"> Pokedex #${element.id}</h1></p>
 <div class="card" style="width: 29rem !important;">
-  <img id="${element.id}modalPic" src="${element.sprite}" class="card-img-modal mx-auto" alt="Pokemon Sprite">
+<div class="background-img"><img id="${element.id}modalPic" src="${element.sprite}" class="card-img-modal mx-auto" alt="Pokemon Sprite"></div>
 
   <div class="card-body">
 
@@ -50,7 +47,7 @@ function PokedexTemplate(element) {
 <div class="row">
   <div class="col-sm-6 mb-3 mb-sm-0">
         <p class="img"> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[0]}.png" class="" alt="${element.types}">
-       <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" class="" alt=""></p>
+         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" class="" alt=""></p>
        
        <div class="form-check form-switch">
   <input class="form-check-input" type="checkbox" role="switch" id="${element.id}switchCheckDefault" onclick="togglePic('${element.sprite}','${element.shiny}','${element.id}')">
@@ -65,11 +62,11 @@ function PokedexTemplate(element) {
   
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${element.id}collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
         Overall
       </button>
     </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#${element.id}accordionExample">
+    <div id="${element.id}collapseTwo" class="accordion-collapse collapse" data-bs-parent="#${element.id}accordionExample">
       <div class="accordion-body">
               <li class="list-group-item">Weight: ${element.weight} kg</li>
               <li class="list-group-item">Height: ${element.height} cm</li>
@@ -82,11 +79,11 @@ function PokedexTemplate(element) {
 
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${element.id}collapseOne" aria-expanded="false" aria-controls="${element.id}collapseOne">
         Stats
       </button>
     </h2>
-    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#${element.id}accordionExample">
+    <div id="${element.id}collapseOne" class="accordion-collapse collapse" data-bs-parent="#${element.id}accordionExample">
       <div class="accordion-body">
 
 <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="${element.stats[0]}" aria-valuemin="0" aria-valuemax="${maxStats.hp}">
@@ -142,7 +139,9 @@ function PokedexTemplate(element) {
       `;
 }
 
-
+function PokedexModal(element){
+  
+}
 
 
 
