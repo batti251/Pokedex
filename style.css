@@ -11,18 +11,20 @@ border: 0 !important;
 }
 
 .navbar{
-  background-color: rgb(37, 61, 105) !important;
+  background-color: rgba(31, 31, 165, 0.89) !important;
 }
 .card-body{
   padding: 0 !important;
-
-
+  border-radius: 20px !important;
+  overflow: hidden;
+  border-style: solid;
+  border-color: rgba(31, 31, 165, 0.89);
 }
  
 .card-img-top {
   width: 144px !important;
-  height: 144px !important;
   top: 20% !important;
+  left: 20%;
 }
 
 .card-img-modal{
@@ -35,12 +37,6 @@ border: 0 !important;
 border: none;
 }
 
-/* .card-body{
-   transition: transform ease-in-out .5s; 
-  z-index: 3 !important;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-} */
 
  .d-flex{
   transition: transform 1s;
@@ -49,16 +45,20 @@ border: none;
 } 
 .menu:hover > .card-body{
     transform: scale(1.1);
+    transition: transform .5s;
     z-index: 4 !important;
-    border: none;
     margin: 0;
+  border-color: gold;
+
+
 }
 
 .menu:hover > .card-body > .d-flex > .card-img-top{
   transform: scale(1.1);
   filter: drop-shadow(10px 10px 10px rgb(219, 207, 184));
   border: none;
-  margin: 0;
+
+
 }
 
 .card:hover{
@@ -69,8 +69,25 @@ border: none;
 
 .modal-content{
   background-image: url("/assets/img/pokeball_background.jpg") !important;
-  background-size: cover;
+  background-size: inherit;
   background-position-x: 22px;
   background-position-y: 72px;
+
 }
 
+.accordion-button{
+  background-color: rgba(193, 193, 196, 0.89)  !important;
+}
+
+.col-sm-6{
+  background-color: rgba(193, 193, 196)  !important;
+}
+
+.form-check{
+  font-weight: bold;
+}
+
+.form-check-input:checked {
+  background-color: gold !important;
+  border-color: gold !important;
+}

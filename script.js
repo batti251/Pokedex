@@ -1,14 +1,19 @@
 const POKE_URL = "https://pokeapi.co/api/v2/";
 const POKEPIC_URL = "https://pokeapi.co/api/v2/pokemon/";
 const POKETYPE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/";
+const PokeAbility_URL = "https://pokeapi.co/api/v2/ability/"
 let PokemonID = [];
 
 function init() {
   getPokeAPI("pokemon", 0, 50);
+
 }
 
 
-
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 /* fetch für Pokemon ID */
 async function getPokeAPI(path = "", offset = "", limit = "") {
   spinnerShowButtonDisabled()
@@ -22,34 +27,54 @@ async function getPokeAPI(path = "", offset = "", limit = "") {
     PokemonID.push(PokemonIDRef.toString());
   }
   await getPokeAPIObj(PokemonID);
-  spinnerHideButtonEnabled() 
-  
+ 
 }
+
+
+async function getDescriptionAPI(combo){
+const prepareCombo = combo.map(a => a.abilities)
+for (let i = 0; i < prepareCombo.length; i++) {
+  const element = prepareCombo[i];
+  for (let i2 = 0; i2 < element.length; i2++) {
+    const changed = element[i2].url;
+    const response = await fetch(changed);
+    const responseRef = await response.json();
+    const entry = responseRef.effect_entries.find(l => l.language.name === "en")
+    combo[i].abilities[i2].description = entry ? entry: "not available"
+  }
+}
+renderPokedex(combo)
+}
+
 
 async function getPokeAPIObj(PokemonID) {
   const promises = PokemonID.map(id => fetch(POKEPIC_URL + id).then(response => response.json()))
   const dataPool = await Promise.all(promises)
+
+
    combinedData(dataPool)
 }
 
  function combinedData(dataPool) {
-console.log(dataPool);
 
+  
   const combo = dataPool.map(pokemon => {
     return {
       id: pokemon.id,
       name: pokemon.name,
       height: pokemon.height*10,
       weight: pokemon.weight/10,
-      abilities: pokemon.abilities.map(a => a.ability.name),
+      abilities: pokemon.abilities.map(d => {return {name:d.ability.name , url: d.ability.url}}),
       sprite: pokemon.sprites.other["official-artwork"]["front_default"],
       shiny: pokemon.sprites.other["official-artwork"]["front_shiny"],
       types: pokemon.types.map(t => t.type.url.split("/").splice(-2, 1)),
       stats: pokemon.stats.map(s => s.base_stat),
-      moves: pokemon.moves.map(m => m.move.name)
+/*       moves: pokemon.moves.map(m => m.move.name) */
     }})
-    renderPokedex(combo)
-    PokedexModal(combo)
+    getDescriptionAPI(combo)
+    console.log(dataPool);
+    console.log(combo);
+    
 }
 
 function renderPokedex(combo) {
@@ -60,8 +85,7 @@ function renderPokedex(combo) {
     html += PokedexTemplate(combo[index]);
   }
   pokeList.innerHTML = html;
-  console.log(combo);
-  
+  spinnerHideButtonEnabled()
 }
 
 let start = 50;
@@ -100,6 +124,7 @@ function filterPokemon() {
 function togglePic(sprite,shiny,id) {
   let imgSource = document.getElementById(`${id}modalPic`)
   let check = document.getElementById(`${id}switchCheckDefault`)
+
   if (check.checked == true) {
     imgSource.src = shiny
   } else {imgSource.src = sprite}
@@ -118,6 +143,24 @@ function spinnerHideButtonEnabled() {
   spinner.classList.add("collapse");
   button.disabled = false;
 }
+
+async function navigateModal(direction, id) {
+  const currentModal = bootstrap.Modal.getInstance(document.getElementById(`${id}exampleModal`));
+  currentModal.hide();
+  document.activeElement.blur();
+  if (direction === 'next') {
+    id = id + 1;
+  } else {
+    id = id - 1;
+  }
+  const nextModalElement = document.getElementById(`${id}exampleModal`);
+  if (nextModalElement) {
+    const nextModal = new bootstrap.Modal(nextModalElement);
+    nextModal.show();
+  }
+}
+
+
 
 //Spielwiese mit map()
 
@@ -168,12 +211,5 @@ console.log(types);
 //more Pokeinfo
 //evolution?
 //attacks?
-
-
-//styling
-  //border-radius list
-    //border ? 
-  //img position center?
-
 
   //responsive < 576px

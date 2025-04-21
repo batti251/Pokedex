@@ -12,6 +12,19 @@ body{
 .background-img{
   justify-content: center;
   display: flex;
+  filter: drop-shadow(5px 5px 15px black);
+}
+
+h5{
+  filter: drop-shadow(-4px 0px 3px white) !important;
+}
+
+.text-center{
+  width: -webkit-fill-available !important;
+}
+
+.container-md{
+  padding-right: 0 !important
 }
 
 .color-1{
@@ -51,7 +64,7 @@ body{
 }
 
 .color-10{
-  background-color:rgb(254, 137, 49 ,0.85) !important;
+  background-color:rgb(254, 137, 49) !important;
 }
 
 .color-11{
@@ -108,4 +121,8 @@ body{
 
 .list-group-item{
   min-width:24%
+}
+
+.text-decoration-underline{
+  cursor: copy;
 }
