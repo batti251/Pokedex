@@ -5,7 +5,7 @@ const PokeAbility_URL = "https://pokeapi.co/api/v2/ability/"
 let PokemonID = [];
 
 function init() {
-  getPokeAPI("pokemon", 0, 50);
+  getPokeAPI("pokemon", 0, 15);
 
 }
 
@@ -88,10 +88,10 @@ function renderPokedex(combo) {
   spinnerHideButtonEnabled()
 }
 
-let start = 50;
+let start = 15;
 async function loadMorePokemon() {
-  await getPokeAPI("pokemon", start, 50);
-  start += 50;
+  await getPokeAPI("pokemon", start, 15);
+  start += 15;
 }
 
 function getMaxStats() {
@@ -201,15 +201,3 @@ console.log(spriteOfficial);
 console.log(types);
 
 }
-
-
-/* To-Do's */
-
-//optimize functions
-
-
-//more Pokeinfo
-//evolution?
-//attacks?
-
-  //responsive < 576px

@@ -20,9 +20,9 @@ function PokedexTemplate(element) {
       <div class="div-color color-${element.types[0]}"></div> 
       <div class="div-color ${element.types[1] ? 'color-' + element.types[1] : 'color-' + element.types[0]}"></div>
     </div>
-    <div class="card-footer p-0 d-flex color-${element.types[0]} ">
+    <div class="card-footer p-0 d-flex justify-content-right color-${element.types[0]} ">
       <p class="img"> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[0]}.png" class="" alt=""></p>
-      <p class="m-0 img color-${element.types[1]} "> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" class="" alt=""></p>
+      <p class="m-0 img w-112 color-${element.types[1]} "> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" class="" alt=""></p>
     </div> 
   </div> 
 </div>
@@ -32,7 +32,7 @@ function PokedexTemplate(element) {
     <!-- Modal -->
 
 <div class="text-capitalize modal fade" id="${element.id}exampleModal" tabindex="-1" aria-labelledby="${element.id}exampleModalLabel" aria-hidden="false">
-  <div class="modal-dialog modal-dialog-scrollable">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="${element.id}exampleModalLabel">${element.name}</h1>
@@ -40,13 +40,13 @@ function PokedexTemplate(element) {
       </div>
       <div class="modal-body">
         <h1 class="fs-5">Pokedex #${element.id}</h1>
-        <div class="card" style="width: 29rem !important;">
+        <div class="card">
           <div class="background-img">
             <img id="${element.id}modalPic" src="${element.sprite}" class="card-img-modal mx-auto" alt="Pokemon Sprite">
           </div>
-          <div class="card-body">
+ 
             <div class="row">
-              <div class="col-sm-6 mb-3 mb-sm-0 w-100 p-3">
+              <div class=" mb-sm-0 col-md-3 w-100 p-3">
                 <p class="img">
                   <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[0]}.png" alt="${element.types[0]}">
                   ${element.types[1] ? `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" alt="${element.types[1]}">` : ''}
@@ -55,7 +55,7 @@ function PokedexTemplate(element) {
                   <input class="form-check-input" type="checkbox" role="switch" id="${element.id}switchCheckDefault" onclick="togglePic('${element.sprite}','${element.shiny}','${element.id}')">
                   <label class="form-check-label" for="switchCheckDefault">Switch Sprite</label>
                 </div>
-              </div>
+      
             </div>
 
             <div class="accordion" id="${element.id}accordionExample">
@@ -67,8 +67,8 @@ function PokedexTemplate(element) {
                 </h2>
                 <div id="${element.id}collapseTwo" class="accordion-collapse collapse" data-bs-parent="#${element.id}accordionExample">
                   <div class="accordion-body">
-                    <li class="list-group-item">Weight: ${element.weight} kg</li>
-                    <li class="list-group-item">Height: ${element.height} cm</li>
+                    <li class="list-group-item">Weight: ${element.weight} <span class="text-lowercase">kg</span></li>
+                    <li class="list-group-item">Height: ${element.height} <span class="text-lowercase">cm</span></li>
                     <li class="list-group-item">
                       Ability: ${element.abilities.map(d => `<span class="fst-italic text-decoration-underline text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="${d.description.effect}">${d.name}</span>`).join(", ")}
                     </li>
