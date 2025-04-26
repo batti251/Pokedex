@@ -187,7 +187,7 @@ justify-content: right;
 }
 
 .modal-content{
-  background-image: url("/assets/img/pokeball_background.jpg") !important;
+  background-image: url("/Pokedex/assets/img/pokeball_background.jpg") !important;
   background-size: cover;
   background-position-x: 22px;
   background-position-y: 72px;
