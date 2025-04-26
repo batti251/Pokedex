@@ -6,11 +6,9 @@ function init() {
   getPokeAPI("pokemon", 0, 15);
 }
 
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-/* fetch für Pokemon ID */
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
 async function getPokeAPI(path = "", offset = "", limit = "") {
   toggleSpinnerButton()
 
@@ -58,7 +56,6 @@ async function getPokeAPIObj(PokemonID) {
       shiny: pokemon.sprites.other["official-artwork"]["front_shiny"],
       types: pokemon.types.map(t => t.type.url.split("/").splice(-2, 1)),
       stats: pokemon.stats.map(s => s.base_stat),
-/*       moves: pokemon.moves.map(m => m.move.name) */
     }})
     getDescriptionAPI(combo)
 }
@@ -140,46 +137,4 @@ async function navigateModal(direction, id) {
     const nextModal = new bootstrap.Modal(nextModalElement);
     nextModal.show();
   }
-}
-
-
-
-//Spielwiese mit map()
-
-
-function getPokeName(dataPool) {
-  const info = dataPool.map(info => ({
-    name: info.name,
-    id: info.id,
-    height: info.height, 
-    weight: info.weight, 
-}));
-
-}
-
- function getPokeAbilities(dataPool) {
-  const abilities = dataPool.map(pokemon => pokemon.abilities.map(a => a.ability.name));
-
-}
-
-function getPokeStats(dataPool) {
-const stats = dataPool.map(stats => stats.stats.map(stat => ({
-  name: stat.stat.name,
-  stat: stat.base_stat,
-}))) ;
-console.log(stats);
-
- 
-}
-
- function getPokeSprite(dataPool){
-  const spriteOfficial = dataPool.map(pokemon => pokemon.sprites.other["official-artwork"]["front_default"])
-console.log(spriteOfficial);
-
-}
-
- function getPokeTypes(dataPool) {
-  const types = dataPool.map(pokemon => pokemon.types.map(t => t.type.name));
-console.log(types);
-
 }

@@ -9,11 +9,8 @@ function PokedexTemplate(element) {
   const speedPercantage = element.stats[5] / maxStats.speed * 100; 
 
   return `
-
-<!-- Button trigger modal -->
 <div type="button" class="text-capitalize col-2 card menu container-md poke-list m-2" id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}ModalTarget">
   <div class="card-body">
-
     <div class="d-flex">
       <div class="position-absolute text-center"><h5 >${element.name}</h5></div>
       <img src="${element.sprite}" class="card-img-top position-absolute" alt="Pokemon Sprites">
@@ -26,10 +23,6 @@ function PokedexTemplate(element) {
     </div> 
   </div> 
 </div>
- 
-  
-
-    <!-- Modal -->
 
 <div class="text-capitalize modal fade" id="${element.id}ModalTarget" tabindex="-1" aria-labelledby="${element.id}ModalTargetLabel" aria-hidden="false">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
@@ -44,7 +37,6 @@ function PokedexTemplate(element) {
           <div class="background-img">
             <img id="${element.id}modalPic" src="${element.sprite}" class="card-img-modal mx-auto" alt="Pokemon Sprite">
           </div>
- 
             <div class="row">
               <div class=" mb-sm-0 col-md-3 w-100 p-3">
                 <p class="img">
@@ -55,8 +47,7 @@ function PokedexTemplate(element) {
                   <input class="form-check-input" type="checkbox" role="switch" id="${element.id}switchCheckDefault" onclick="togglePic('${element.sprite}','${element.shiny}','${element.id}')">
                   <label class="form-check-label" for="switchCheckDefault">Switch Sprite</label>
                 </div>
-      
-            </div>
+              </div>
 
             <div class="accordion" id="${element.id}accordionExample">
               <div class="accordion-item">
@@ -70,7 +61,7 @@ function PokedexTemplate(element) {
                     <li class="list-group-item">Weight: ${element.weight} <span class="text-lowercase">kg</span></li>
                     <li class="list-group-item">Height: ${element.height} <span class="text-lowercase">cm</span></li>
                     <li class="list-group-item">
-                      Ability: ${element.abilities.map(d => `<span class="fst-italic text-decoration-dashed text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="${d.description.effect}">${d.name}</span>`).join(", ")}
+                      Ability: ${element.abilities.map(d => `<span class="fst-italic text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="${d.description.effect}">${d.name}</span>`).join(", ")}
                     </li>
                   </div>
                 </div>
@@ -114,20 +105,17 @@ function PokedexTemplate(element) {
                       <li class="list-group-item">Speed: ${element.stats[5]}</li>
                       <div class="progress-bar" style="width: ${speedPercantage}%"></div>
                     </div>
-
                   </div>
                 </div>
               </div>
             </div> 
-
           </div>
         </div>
       </div> 
-<div class="modal-footer d-flex justify-content-between">
-  <button type="button" class="btn btn-secondary" onclick="navigateModal('previous', ${element.id})">← Previous</button>
-  <button type="button" class="btn btn-primary" onclick="navigateModal('next', ${element.id})">Next →</button>
-</div>
-
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" onclick="navigateModal('previous', ${element.id})">← Previous</button>
+        <button type="button" class="btn btn-primary" onclick="navigateModal('next', ${element.id})">Next →</button>
+      </div>
     </div>
   </div>
 </div>
