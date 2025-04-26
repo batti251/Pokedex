@@ -137,37 +137,34 @@ justify-content: right;
 
 .navbar{
   background-color: rgba(31, 31, 165, 0.89) !important;
-
 }
 
 .card{
-  /*   width: fit-content !important; */
-  /*   box-shadow: inset 0 0 0 1000px rgba(104, 119, 119, 0.5); */
     border: 0 !important;
     --bs-card-border-width: none !important;
     background-color: transparent !important;
-  }
+}
    
-  .card-img-top {
+.card-img-top {
     width: 144px !important;
     top: 20% !important;
     left: 20%;
-  }
+}
   
-  .card-img-modal{
+.card-img-modal{
     width: 240px !important;
     height: 240px !important;
-  }
+}
   
-  .col-2{
+.col-2{
   border: none;
   }
   
-   .d-flex{
+.d-flex{
     transition: transform 1s;
     border: none;
     margin: 0;
-  } 
+} 
 
 .img-fluid{
   height: 80px !important
@@ -189,7 +186,6 @@ justify-content: right;
   justify-content: center !important;
 }
 
-
 .modal-content{
   background-image: url("/assets/img/pokeball_background.jpg") !important;
   background-size: cover;
@@ -207,4 +203,8 @@ justify-content: right;
 
 .form-check{
   font-weight: bold;
+}
+
+.spinner-grow {
+  animation-duration: 2s !important;
 }

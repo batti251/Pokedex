@@ -1,14 +1,10 @@
 const POKE_URL = "https://pokeapi.co/api/v2/";
 const POKEPIC_URL = "https://pokeapi.co/api/v2/pokemon/";
-const POKETYPE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/";
-const PokeAbility_URL = "https://pokeapi.co/api/v2/ability/"
 let PokemonID = [];
 
 function init() {
   getPokeAPI("pokemon", 0, 15);
-
 }
-
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -16,7 +12,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 /* fetch für Pokemon ID */
 async function getPokeAPI(path = "", offset = "", limit = "") {
-  spinnerShowButtonDisabled()
+  toggleSpinnerButton()
 
   let PokemonIDRef = "";
   const response = await fetch(POKE_URL + path + "/?offset=" + offset + "&limit=" + limit);
@@ -27,9 +23,7 @@ async function getPokeAPI(path = "", offset = "", limit = "") {
     PokemonID.push(PokemonIDRef.toString());
   }
   await getPokeAPIObj(PokemonID);
- 
-}
-
+ }
 
 async function getDescriptionAPI(combo){
 const prepareCombo = combo.map(a => a.abilities)
@@ -46,18 +40,13 @@ for (let i = 0; i < prepareCombo.length; i++) {
 renderPokedex(combo)
 }
 
-
 async function getPokeAPIObj(PokemonID) {
   const promises = PokemonID.map(id => fetch(POKEPIC_URL + id).then(response => response.json()))
   const dataPool = await Promise.all(promises)
-
-
    combinedData(dataPool)
 }
 
  function combinedData(dataPool) {
-
-  
   const combo = dataPool.map(pokemon => {
     return {
       id: pokemon.id,
@@ -72,9 +61,6 @@ async function getPokeAPIObj(PokemonID) {
 /*       moves: pokemon.moves.map(m => m.move.name) */
     }})
     getDescriptionAPI(combo)
-    console.log(dataPool);
-    console.log(combo);
-    
 }
 
 function renderPokedex(combo) {
@@ -85,7 +71,7 @@ function renderPokedex(combo) {
     html += PokedexTemplate(combo[index]);
   }
   pokeList.innerHTML = html;
-  spinnerHideButtonEnabled()
+  toggleSpinnerButton()
 }
 
 let start = 15;
@@ -105,7 +91,6 @@ function getMaxStats() {
   };
   return maxStats;
 }
-
 
 function filterPokemon() {
   let input = document.getElementById("searchBar");
@@ -130,22 +115,18 @@ function togglePic(sprite,shiny,id) {
   } else {imgSource.src = sprite}
 }
 
-function spinnerShowButtonDisabled() {
+function toggleSpinnerButton() {
   const spinner = document.getElementById("loadingSpinner");
+  const spinnerParent = document.getElementById('overlaySpinner')
   const button = document.getElementById("loadMoreButton");
-  spinner.classList.remove("collapse");
-  button.disabled = true;
-}
-
-function spinnerHideButtonEnabled() {
-  const spinner = document.getElementById("loadingSpinner");
-  const button = document.getElementById("loadMoreButton");
-  spinner.classList.add("collapse");
-  button.disabled = false;
+  spinner.classList.toggle("collapse");
+  spinnerParent.classList.toggle("overlay")
+  document.body.classList.toggle("no-scrollbar")
+  button.disabled = !button.disabled
 }
 
 async function navigateModal(direction, id) {
-  const currentModal = bootstrap.Modal.getInstance(document.getElementById(`${id}exampleModal`));
+  const currentModal = bootstrap.Modal.getInstance(document.getElementById(`${id}ModalTarget`));
   currentModal.hide();
   document.activeElement.blur();
   if (direction === 'next') {
@@ -153,7 +134,8 @@ async function navigateModal(direction, id) {
   } else {
     id = id - 1;
   }
-  const nextModalElement = document.getElementById(`${id}exampleModal`);
+
+  const nextModalElement = document.getElementById(`${id}ModalTarget`);
   if (nextModalElement) {
     const nextModal = new bootstrap.Modal(nextModalElement);
     nextModal.show();

@@ -11,7 +11,7 @@ function PokedexTemplate(element) {
   return `
 
 <!-- Button trigger modal -->
-<div type="button" class="text-capitalize col-2 card menu container-md poke-list m-2" id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}exampleModal">
+<div type="button" class="text-capitalize col-2 card menu container-md poke-list m-2" id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}ModalTarget">
   <div class="card-body">
 
     <div class="d-flex">
@@ -31,11 +31,11 @@ function PokedexTemplate(element) {
 
     <!-- Modal -->
 
-<div class="text-capitalize modal fade" id="${element.id}exampleModal" tabindex="-1" aria-labelledby="${element.id}exampleModalLabel" aria-hidden="false">
+<div class="text-capitalize modal fade" id="${element.id}ModalTarget" tabindex="-1" aria-labelledby="${element.id}ModalTargetLabel" aria-hidden="false">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="${element.id}exampleModalLabel">${element.name}</h1>
+        <h1 class="modal-title fs-5" id="${element.id}ModalTargetLabel">${element.name}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -70,7 +70,7 @@ function PokedexTemplate(element) {
                     <li class="list-group-item">Weight: ${element.weight} <span class="text-lowercase">kg</span></li>
                     <li class="list-group-item">Height: ${element.height} <span class="text-lowercase">cm</span></li>
                     <li class="list-group-item">
-                      Ability: ${element.abilities.map(d => `<span class="fst-italic text-decoration-underline text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="${d.description.effect}">${d.name}</span>`).join(", ")}
+                      Ability: ${element.abilities.map(d => `<span class="fst-italic text-decoration-dashed text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="${d.description.effect}">${d.name}</span>`).join(", ")}
                     </li>
                   </div>
                 </div>
@@ -131,10 +131,6 @@ function PokedexTemplate(element) {
     </div>
   </div>
 </div>
-
-
-
-
       `;
 }
 
