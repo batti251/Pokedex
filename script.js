@@ -15,12 +15,14 @@ function init() {
  * @param {Number} limit - total amount of requests
  */
 async function getPokeAPI(path = "" ,offset = "", limit = ""){
+  collection = []
   toggleSpinnerButton()
-  for (offset; offset < limit; offset++) {
+  for (let index = 0 ; index < 20; index++, offset++) {
      let newResponse = await fetch(POKE_URL + path + offset)
      let newResponseRef = await newResponse.json();
       collection.push(newResponseRef)
   }
+  console.log(collection);
   combinedData(collection);
 }
 
@@ -61,22 +63,19 @@ renderPokedex(combo)
 }
 
 function renderPokedex(combo) {
-  const pokeList = document.getElementById('main');
-  pokeList.innerHTML = "";
   let html = "";
+  const pokeList = document.getElementById('main');
   for (let index = 0; index < combo.length; index++) {
     html += PokedexTemplate(combo[index]);
   }
-  pokeList.innerHTML = html;
+  pokeList.innerHTML += html;
   toggleSpinnerButton()
 }
 
 let start = 21;
-let neWLimit = 41
 async function loadMorePokemon() {
-  await getPokeAPI("pokemon/", start, neWLimit);
+  await getPokeAPI("pokemon/", start, 21);
   start += 20;
-  neWLimit += 20;
 }
 
 function getMaxStats() {
