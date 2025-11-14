@@ -1,48 +1,33 @@
 const POKE_URL = "https://pokeapi.co/api/v2/";
 const POKEPIC_URL = "https://pokeapi.co/api/v2/pokemon/";
-let PokemonID = [];
+let collection = []
+
 
 function init() {
-  getPokeAPI("pokemon", 0, 15);
+  getPokeAPI("pokemon/" , 1, 21);
 }
+
+/**
+ * This Function fetches the Pokemon Data, according to the set parameters.
+ * It pushes each POkemon Data as Object into a Collection-Array 
+ * @param {String} path - Group of the API 
+ * @param {Number} offset - index from the URL, to get according Pokemon
+ * @param {Number} limit - total amount of requests
+ */
+async function getPokeAPI(path = "" ,offset = "", limit = ""){
+  toggleSpinnerButton()
+  for (offset; offset < limit; offset++) {
+     let newResponse = await fetch(POKE_URL + path + offset)
+     let newResponseRef = await newResponse.json();
+      collection.push(newResponseRef)
+  }
+  combinedData(collection);
+}
+
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-async function getPokeAPI(path = "", offset = "", limit = "") {
-  toggleSpinnerButton()
-
-  let PokemonIDRef = "";
-  const response = await fetch(POKE_URL + path + "/?offset=" + offset + "&limit=" + limit);
-  let responseRef = await response.json();
-  let PokeAPI = responseRef.results;
-  for (let index = 0; index < PokeAPI.length; index++) {
-    PokemonIDRef = PokeAPI[index].url.split("/").splice(-2, 1);
-    PokemonID.push(PokemonIDRef.toString());
-  }
-  await getPokeAPIObj(PokemonID);
- }
-
-async function getDescriptionAPI(combo){
-const prepareCombo = combo.map(a => a.abilities)
-for (let i = 0; i < prepareCombo.length; i++) {
-  const element = prepareCombo[i];
-  for (let i2 = 0; i2 < element.length; i2++) {
-    const changed = element[i2].url;
-    const response = await fetch(changed);
-    const responseRef = await response.json();
-    const entry = responseRef.effect_entries.find(l => l.language.name === "en")
-    combo[i].abilities[i2].description = entry ? entry: "not available"
-  }
-}
-renderPokedex(combo)
-}
-
-async function getPokeAPIObj(PokemonID) {
-  const promises = PokemonID.map(id => fetch(POKEPIC_URL + id).then(response => response.json()))
-  const dataPool = await Promise.all(promises)
-   combinedData(dataPool)
-}
 
  function combinedData(dataPool) {
   const combo = dataPool.map(pokemon => {
@@ -60,6 +45,21 @@ async function getPokeAPIObj(PokemonID) {
     getDescriptionAPI(combo)
 }
 
+async function getDescriptionAPI(combo){
+const prepareCombo = combo.map(a => a.abilities)
+for (let i = 0; i < prepareCombo.length; i++) {
+  const element = prepareCombo[i];
+  for (let i2 = 0; i2 < element.length; i2++) {
+    const changed = element[i2].url;
+    const response = await fetch(changed);
+    const responseRef = await response.json();
+    const entry = responseRef.effect_entries.find(l => l.language.name === "en")
+    combo[i].abilities[i2].description = entry ? entry: "not available"
+  }
+}
+renderPokedex(combo)
+}
+
 function renderPokedex(combo) {
   const pokeList = document.getElementById('main');
   pokeList.innerHTML = "";
@@ -71,10 +71,12 @@ function renderPokedex(combo) {
   toggleSpinnerButton()
 }
 
-let start = 15;
+let start = 21;
+let neWLimit = 41
 async function loadMorePokemon() {
-  await getPokeAPI("pokemon", start, 15);
-  start += 15;
+  await getPokeAPI("pokemon/", start, neWLimit);
+  start += 20;
+  neWLimit += 20;
 }
 
 function getMaxStats() {
