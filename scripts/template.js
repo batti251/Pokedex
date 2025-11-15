@@ -7,9 +7,11 @@ function PokedexTemplate(element) {
   const spAttackPercantage = element.stats[3] / maxStats["special-attack"] * 100;
   const spDefensePercantage = element.stats[4] / maxStats["special-defense"] * 100;
   const speedPercantage = element.stats[5] / maxStats.speed * 100; 
-
+  console.log(element.abilities);
+  
   return `
-<div type="button" class="text-capitalize col-2 card menu container-md poke-list m-2" id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}ModalTarget">
+<div type="button" class="text-capitalize col-2 card menu container-md poke-list m-2" id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}ModalTarget" 
+onclick="getAbilityDescription(${element.id})">
   <div class="card-body">
     <div class="d-flex">
       <div class="position-absolute text-center"><h5 >${element.name}</h5></div>
@@ -60,8 +62,9 @@ function PokedexTemplate(element) {
                   <div class="accordion-body">
                     <li class="list-group-item">Weight: ${element.weight} <span class="text-lowercase">kg</span></li>
                     <li class="list-group-item">Height: ${element.height} <span class="text-lowercase">cm</span></li>
-                    <li class="list-group-item">
-                      Ability: ${element.abilities.map(d => `<span class="fst-italic text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="${d.description.effect}">${d.name}</span>`).join(", ")}
+                    <li class="list-group-item" id="${element.id}title">
+                    Ability: ${element.abilities.map(d => `<span class="fst-italic text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="">${d.name}</span>`).join(", ")}
+
                     </li>
                   </div>
                 </div>
@@ -113,8 +116,8 @@ function PokedexTemplate(element) {
         </div>
       </div> 
       <div class="modal-footer d-flex justify-content-between">
-        <button type="button" class="btn btn-secondary" onclick="navigateModal('previous', ${element.id})">← Previous</button>
-        <button type="button" class="btn btn-primary" onclick="navigateModal('next', ${element.id})">Next →</button>
+        <button type="button" class="btn btn-secondary" onclick="navigateModal('previous', ${element.id}, getAbilityDescription(${element.id-1}))">← Previous</button>
+        <button type="button" class="btn btn-primary" onclick="navigateModal('next', ${element.id}, getAbilityDescription(${element.id+1}))">Next →</button>
       </div>
     </div>
   </div>

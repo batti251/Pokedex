@@ -1,11 +1,65 @@
 const POKE_URL = "https://pokeapi.co/api/v2/";
 const POKEPIC_URL = "https://pokeapi.co/api/v2/pokemon/";
 let collection = []
-
+let description = []
 
 function init() {
   getPokeAPI("pokemon/" , 1, 21);
 }
+
+/**
+ * This function gets the Description from the Pokemon/Ability-API
+ * 
+ * @param {Number} pokemonId - id from the Pokemons, beginning with 1 
+ */
+async function getAbilityDescription(pokemonId){
+  let pokemonIndex = pokemonId -1
+  let array = []
+  let object = {}
+  await mapAbilities(pokemonIndex, array, object)
+  updateAbilityTitle(pokemonId, array)
+}
+
+
+/**
+ * This Function maps the fetched Datas from the Ability-API
+ * It pulls the english Version
+ * 
+ * @param {Number} pokemonIndex  - id from the Pokemons, beginning with 1 
+ * @param {Array} array - List of created objects during map-method
+ * @param {Object} object - individual object for the according ability
+ */
+async function mapAbilities(pokemonIndex, array, object){
+  let abilityArray = collection[pokemonIndex].abilities.map(a => a.ability.url)
+ await Promise.all(
+    abilityArray.map( async (url) => {
+     let data = await fetch(url);
+     let newData = await data.json()
+     let text = newData['effect_entries'].find(language => language.language.name === 'en')
+     object = {
+      'name' : newData.name,
+      'effect' : text.effect
+     }
+     array.push(object)
+    })
+  )
+}
+
+
+/**
+ * This function updates the ability-title-attribute in the dialog
+ * 
+ * @param {Number} pokemonId - id from the Pokemons, beginning with 1 
+ * @param {Array} array - List of created objects during map-method
+ */
+function updateAbilityTitle(pokemonId, array) {
+  let abililtyHTMLRef = document.getElementById(pokemonId+'title');
+  let abililtyHTML = abililtyHTMLRef.querySelectorAll('span')
+   for (let index = 0; index < array.length; index++) {
+   abililtyHTML[index].title = array.find(name => name.name == abililtyHTML[index].innerHTML).effect
+}
+}
+
 
 /**
  * This Function fetches the Pokemon Data, according to the set parameters.
@@ -15,14 +69,12 @@ function init() {
  * @param {Number} limit - total amount of requests
  */
 async function getPokeAPI(path = "" ,offset = "", limit = ""){
-  collection = []
   toggleSpinnerButton()
   for (let index = 0 ; index < 20; index++, offset++) {
      let newResponse = await fetch(POKE_URL + path + offset)
      let newResponseRef = await newResponse.json();
       collection.push(newResponseRef)
   }
-  console.log(collection);
   combinedData(collection);
 }
 
@@ -44,23 +96,11 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
       types: pokemon.types.map(t => t.type.url.split("/").splice(-2, 1)),
       stats: pokemon.stats.map(s => s.base_stat),
     }})
-    getDescriptionAPI(combo)
+    renderPokedex(combo)
+    
 }
 
-async function getDescriptionAPI(combo){
-const prepareCombo = combo.map(a => a.abilities)
-for (let i = 0; i < prepareCombo.length; i++) {
-  const element = prepareCombo[i];
-  for (let i2 = 0; i2 < element.length; i2++) {
-    const changed = element[i2].url;
-    const response = await fetch(changed);
-    const responseRef = await response.json();
-    const entry = responseRef.effect_entries.find(l => l.language.name === "en")
-    combo[i].abilities[i2].description = entry ? entry: "not available"
-  }
-}
-renderPokedex(combo)
-}
+
 
 function renderPokedex(combo) {
   let html = "";
@@ -68,7 +108,7 @@ function renderPokedex(combo) {
   for (let index = 0; index < combo.length; index++) {
     html += PokedexTemplate(combo[index]);
   }
-  pokeList.innerHTML += html;
+  pokeList.innerHTML = html;
   toggleSpinnerButton()
 }
 
