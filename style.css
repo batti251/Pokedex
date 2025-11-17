@@ -3,7 +3,8 @@
   transition: transform .5s;
   z-index: 4 !important;
   margin: 0;
-  border-color: gold;
+  border-color: rgba(255, 217, 0, 0.322);
+  border-style: groove;
 }
 
 .menu:hover > .card-body > .d-flex > .card-img-top{
@@ -39,3 +40,36 @@
 .no-scrollbar {
   overflow: hidden !important;
 }
+
+
+.gif-load{
+  width: 50%;
+}
+
+.loading-text{
+  top: 58% !important;
+}
+
+.dot-animation{
+  display: flex;
+  height: 6px;
+  left: 59%;
+  top: 58.2%;
+  background-color: black;
+}
+
+.loader {
+  top: 60%;
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  color:  #FFCB00;
+  text-shadow: 4px 4px 4px #1A3A74;
+  font-size: 30px;
+  clip-path: inset(0 3ch 0 0);
+  animation: l4 1s steps(4) infinite;
+}
+.loader:before {
+  content:"Loading..."
+}
+@keyframes l4 {to{clip-path: inset(0 -1ch 0 0)}}

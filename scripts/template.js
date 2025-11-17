@@ -7,21 +7,22 @@ function PokedexTemplate(element) {
   const spAttackPercantage = element.stats[3] / maxStats["special-attack"] * 100;
   const spDefensePercantage = element.stats[4] / maxStats["special-defense"] * 100;
   const speedPercantage = element.stats[5] / maxStats.speed * 100; 
-  console.log(element.abilities);
+  console.log(element.types);
   
   return `
 <div type="button" class="text-capitalize col-2 card menu container-md poke-list m-2" id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}ModalTarget" 
 onclick="getAbilityDescription(${element.id})">
-  <div class="card-body">
+  <div class="card-body test" style="--color1: var(--type${element.types[0]});
+      --color2: var(--type${element.types[1]? element.types[1] : 0})">
     <div class="d-flex">
       <div class="position-absolute text-center"><h5 >${element.name}</h5></div>
       <img src="${element.sprite}" class="card-img-top position-absolute" alt="Pokemon Sprites">
-      <div class="div-color color-${element.types[0]}"></div> 
-      <div class="div-color ${element.types[1] ? 'color-' + element.types[1] : 'color-' + element.types[0]}"></div>
+      <div class="div-color"      ></div> 
+      
     </div>
-    <div class="card-footer p-0 d-flex justify-content-right color-${element.types[0]} ">
+    <div class="card-footer p-0 d-flex justify-content-right">
       <p class="img"> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[0]}.png" class="" alt=""></p>
-      <p class="m-0 img w-112 color-${element.types[1]} "> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" class="" alt=""></p>
+      <p class="m-0 img w-112"> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${element.types[1]}.png" class="" alt=""></p>
     </div> 
   </div> 
 </div>

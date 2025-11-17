@@ -6,7 +6,7 @@ html {
 body{
   height: 100vh !important;
   background-repeat:no-repeat !important;
-  background-color: rgb(0, 0, 0, 0.4) !important;
+  background-color: rgba(109, 112, 127,  73%) !important;
 }
 
 .background-img{
@@ -27,76 +27,30 @@ h5{
   padding-right: 0 !important
 }
 
-.color-1{
-  background-color: rgb(121, 139, 154) !important;
+:root{
+  --type0: rgb(196, 191, 191);
+  --type1:  rgb(121, 139, 154), rgb(120, 135, 148);
+  --type2: rgb(226, 93, 130), rgb(167, 45, 80) ;
+  --type3: rgb(73, 112, 195), rgb(32, 63, 131);
+  --type4: rgb(161, 65, 213), rgb(149, 66, 194);
+  --type5: rgb(215, 125, 71), rgb(143, 76, 35);
+  --type6: rgb(175, 155, 100), rgb(109, 92, 44);
+  --type7: rgb(145, 191, 49), rgb(106, 146, 19);
+  --type8: rgb(87, 97, 194), rgb(37, 46, 128);
+  --type9: rgb(93, 146, 164), rgb(42, 91, 107);
+  --type10: rgb(254, 137, 49) , rgb(199, 97, 18);
+  --type11: rgb(38, 154, 214),rgb(12, 117, 170);
+  --type12: rgb(58, 185, 99), rgb(23, 129, 64);
+  --type13: rgb(235, 202, 57), rgb(184, 154, 22);
+  --type14: rgb(249, 129, 125), rgb(170, 52, 48);
+  --type15: rgb(104, 196, 202), rgb(42, 133, 139);
+  --type16: rgb(68, 116, 167), rgb(28, 70, 116);
+  --type17: rgb(104, 115, 153), rgb(61, 74, 121);
+  --type18: rgb(252, 138, 219), rgb(207, 83, 172);
 }
 
-.color-2{
-  background-color:rgb(226, 93, 130) !important;
-}
-
-.color-3{
-  background-color:rgb(73, 112, 195) !important;
-}
-
-.color-4{
-  background-color:rgb(161, 65, 213) !important;
-}
-
-.color-5{
-  background-color:rgb(215, 125, 71) !important;
-}
-
-.color-6{
-  background-color:rgb(175, 155, 100) !important;
-}
-
-.color-7{
-  background-color:rgb(145, 191, 49) !important;
-}
-
-.color-8{
-  background-color:rgb(87, 97, 194) !important;
-}
-
-.color-9{
-  background-color:rgb(93, 146, 164) !important;
-}
-
-.color-10{
-  background-color:rgb(254, 137, 49) !important;
-}
-
-.color-11{
-  background-color:rgb(38, 154, 214) !important;
-}
-
-.color-12{
-  background-color:rgb(58, 185, 99) !important;
-}
-
-.color-13{
-  background-color:rgb(235, 202, 57) !important;
-}
-
-.color-14{
-  background-color:rgb(249, 129, 125) !important;
-}
-
-.color-15{
-  background-color:rgb(104, 196, 202) !important;
-}
-
-.color-16{
-  background-color:rgb(68, 116, 167) !important;
-}
-
-.color-17{
-  background-color:rgb(104, 115, 153) !important;
-}
-
-.color-18{
-  background-color:rgb(252, 138, 219) !important;
+.test{
+  background-image:  radial-gradient(84% 64%, var(--color1), var(--color2));
 }
 
 .color-undefined{
@@ -174,7 +128,7 @@ justify-content: right;
   border-radius: 20px !important;
   overflow: hidden;
   border-style: solid;
-  border-color: rgba(31, 31, 165, 0.89);
+  border-color: rgba(223, 223, 214, 20%);
 }
 
 .navbar-toggler{
