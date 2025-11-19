@@ -1,14 +1,14 @@
 const maxStats = getMaxStats()
 
 function PokedexTemplate(element) {
+  let arr = [element.stats[0], element.stats[1], element.stats[2], element.stats[3], element.stats[4]]
+  
   const hpPercantage = element.stats[0] / maxStats.hp * 100;
   const attackPercantage = element.stats[1] / maxStats.attack * 100;
   const defensePercantage = element.stats[2] / maxStats.defense * 100;
   const spAttackPercantage = element.stats[3] / maxStats["special-attack"] * 100;
   const spDefensePercantage = element.stats[4] / maxStats["special-defense"] * 100;
   const speedPercantage = element.stats[5] / maxStats.speed * 100; 
-  console.log(element.types);
-  
   return `
 <div type="button" class="text-capitalize col-2 card menu container-md poke-list m-2" id="${element.id}" data-bs-toggle="modal" data-bs-target="#${element.id}ModalTarget" 
 onclick="getAbilityDescription(${element.id})">
@@ -77,36 +77,43 @@ onclick="getAbilityDescription(${element.id})">
                     Stats
                   </button>
                 </h2>
+
+
+
                 <div id="${element.id}collapseOne" class="accordion-collapse collapse" data-bs-parent="#${element.id}accordionExample">
                   <div class="accordion-body">
 
-                    <div class="progress" role="progressbar" aria-valuenow="${element.stats[0]}" aria-valuemin="0" aria-valuemax="${maxStats.hp}">
-                      <li class="list-group-item">HP: ${element.stats[0]}</li>
+                    <label for="range1" class="form-label">Level: <output id="levelFig${element.id}" aria-hidden="true">1</output></label> 
+                    
+                    <input type="range" for"range1" class="form-range" id="range${element.id}" min="1" max="100" value="1" step="1" oninput="updateLevel(${element.id})">
+
+                    <div class="progress" role="progressbar" value="${element.stats[0]}" aria-valuemin="0" aria-valuemax="${maxStats.hp}">
+                      <li class="list-group-item">HP: <output class="flexStat${element.id}">${element.stats[0]}</output></li>
                       <div class="progress-bar" style="width: ${hpPercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${element.stats[1]}" aria-valuemin="0" aria-valuemax="${maxStats.attack}">
-                      <li class="list-group-item">Attack: ${element.stats[1]}</li>
+                      <li class="list-group-item${element.id}">Attack: <output class="flexStat${element.id}">${element.stats[1]}</output></li>
                       <div class="progress-bar" style="width: ${attackPercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${element.stats[2]}" aria-valuemin="0" aria-valuemax="${maxStats.defense}">
-                      <li class="list-group-item">Defense: ${element.stats[2]}</li>
+                      <li class="list-group-item${element.id}">Defense: <output class="flexStat${element.id}">${element.stats[2]}</output></li>
                       <div class="progress-bar" style="width: ${defensePercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${element.stats[3]}" aria-valuemin="0" aria-valuemax="${maxStats["special-attack"]}">
-                      <li class="list-group-item">Sp. Attack: ${element.stats[3]}</li>
+                      <li class="list-group-item${element.id}">Sp. Attack: <output class="flexStat${element.id}">${element.stats[3]}</output></li>
                       <div class="progress-bar" style="width: ${spAttackPercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${element.stats[4]}" aria-valuemin="0" aria-valuemax="${maxStats["special-defense"]}">
-                      <li class="list-group-item">Sp. Defense: ${element.stats[4]}</li>
+                      <li class="list-group-item${element.id}">Sp. Defense: <output class="flexStat${element.id}">${element.stats[4]}</output></li>
                       <div class="progress-bar" style="width: ${spDefensePercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${element.stats[5]}" aria-valuemin="0" aria-valuemax="${maxStats.speed}">
-                      <li class="list-group-item">Speed: ${element.stats[5]}</li>
+                      <li class="list-group-item${element.id}">Speed: <output class="flexStat${element.id}">${element.stats[5]}</output></li>
                       <div class="progress-bar" style="width: ${speedPercantage}%"></div>
                     </div>
                   </div>

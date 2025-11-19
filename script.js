@@ -2,6 +2,9 @@ const POKE_URL = "https://pokeapi.co/api/v2/";
 const POKEPIC_URL = "https://pokeapi.co/api/v2/pokemon/";
 let collection = []
 let description = []
+let level = 1
+let storeStats = []
+
 
 function init() {
   getPokeAPI("pokemon/" , 1, 21);
@@ -179,3 +182,63 @@ async function navigateModal(direction, id) {
     nextModal.show();
   }
 }
+
+
+/**
+ * This Function updates the Level, according to the set input-range
+ * It also calls further functions, for calculating and rendering new stat-figures
+ * 
+ * @param {Number} id - Pokedex # of the target Pokemon
+ */
+function updateLevel(id){
+  let calculatedStat = [];
+  let input = document.getElementById('range'+id)
+  let output =  document.getElementById('levelFig'+id)
+  output.textContent = input.value
+
+  calculateNewStats(id,calculatedStat,input)
+  updateStatHTML(id, calculatedStat)
+}
+
+/**
+ * From 19.11.2025: The Calculation does not Include IV, EV and Nature Values !!!
+ * 
+ * This Function calculates the new Stats according to the targets base-stats and set Level
+ * It's calculation is based on calculation from: https://pokemon.fandom.com/wiki/Statistics#Formula
+ * 
+ * @param {Number} id - Pokedex # of the target Pokemon (needs to be reduced here by 1 for correct index iteration)
+ * @param {Array} calculatedStat - collection of the calculated stats based on 2 calculations:
+ *                            => HP (hp) = floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + Level + 10
+ *                            => Other Stats (other) = (floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + 5) x Nature
+ * @param {*} input - the set Level between 1 and 100 
+ */
+function calculateNewStats(id,calculatedStat,input) {
+  let baseStats = collection[id-1].stats;
+  baseStats.forEach((stat,index) => { 
+    if (index == 0) {
+      let hp = Math.floor(2*Number(stat['base_stat'])/100 * Number(input.value)) + Number(input.value) + 10
+      return calculatedStat.splice(index,1,hp)
+    } else {
+      let other = Math.floor(2*Number(stat['base_stat'])/100 * Number(input.value)) + 5;
+      return calculatedStat.splice(index,1,other)
+    }
+  }
+  )
+}
+
+/**
+ * This Function updates the stat-values in the output field of the list-group-item, according to the set Level 
+ * 
+ * @param {Number} id - Pokedex # of the target Pokemon 
+ * @param {Array} calculatedStat - collection of the calculated stats
+ */
+function updateStatHTML(id, calculatedStat) {
+  let html = document.querySelectorAll('.flexStat'+id)
+  html.forEach((element, index) => {
+    element.textContent = calculatedStat[index]
+  });
+  
+}
+
+
+
