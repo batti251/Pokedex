@@ -1,30 +1,18 @@
 html {
   scroll-behavior: smooth;
-  height: 100vh !important;
 }
 
 body{
-  height: 100vh !important;
   background-repeat:no-repeat !important;
   background-color: rgba(109, 112, 127,  73%) !important;
 }
 
 .background-img{
-  justify-content: center;
-  display: flex;
   filter: drop-shadow(5px 5px 15px black);
 }
 
 h5{
   filter: drop-shadow(-4px 0px 3px white) !important;
-}
-
-.text-center{
-  width: -webkit-fill-available !important;
-}
-
-.container-md{
-  padding-right: 0 !important
 }
 
 :root{
@@ -58,7 +46,7 @@ h5{
 }
 
 .linear-diag-bg{
-    background-image:  linear-gradient(10deg, var(--color1) , var(--color2));
+  background-image:  linear-gradient(10deg, var(--color1) , var(--color2));
 }
 
 
@@ -68,18 +56,12 @@ h5{
 }
 
 .div-color{
-  width: 50% !important;
   height: 200px !important;
 }
 
 .poke-list{
   width:242px !important;
   height: 240px !important;
-}
-
-.progress-bar{
-  border-radius: 28px;
-    border-style: double;
 }
 
 li[class~="list-group-item"]{
@@ -90,10 +72,6 @@ li[class~="list-group-item"]{
   cursor: copy;
 }
 
-.card-footer{
-justify-content: right;
-}
-
 .m-0{
   width: 112px;
 }
@@ -102,55 +80,29 @@ justify-content: right;
   background-color: rgba(31, 31, 165, 0.89) !important;
 }
 
-.card{
-    border: 0 !important;
-    --bs-card-border-width: none !important;
-    background-color: transparent !important;
-}
-   
+
 .card-img-top {
     width: 144px !important;
-    top: 20% !important;
-    left: 20%;
 }
   
 .card-img-modal{
-    width: 240px !important;
-    height: 240px !important;
+    filter: brightness(1.1);
 }
-  
-.col-2{
-  border: none;
-  }
-  
-.d-flex{
-    transition: transform 1s;
-    border: none;
-    margin: 0;
-} 
 
-.img-fluid{
-  height: 80px !important
-}
+
 .card-body{
-  padding: 0 !important;
-  border-radius: 20px !important;
   overflow: hidden;
   border-style: solid;
   border-color: rgba(223, 223, 214, 20%);
 }
 
-.navbar-toggler{
-  border-radius: 0 !important
-}
-
 .row{
   --bs-gutter-x: 0 !important;
-  justify-content: center !important;
 }
 
 .modal-content{
   background-image: url("./../assets/img/pokeball_background.jpg") !important;
+  filter: brightness(0.9);
   background-size: cover;
   background-position-x: 22px;
   background-position-y: 72px;
@@ -172,6 +124,3 @@ justify-content: right;
   animation-duration: 2s !important;
 }
 
-.fs-6{
-  font-size: 0.9rem !important;
-}

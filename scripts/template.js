@@ -18,21 +18,28 @@ function PokedexTemplate(element) {
     (element.stats[4] / maxStats["special-defense"]) * 100;
   const speedPercantage = (element.stats[5] / maxStats.speed) * 100;
   return `
-<div type="button" class="text-capitalize col-2 card menu container-md poke-list m-2" id="${
+<div type="button" class="text-capitalize col-2 card menu pr-0 poke-list m-2 bg-transparent border-0" id="${
     element.id
   }" data-bs-toggle="modal" data-bs-target="#${element.id}ModalTarget" 
 onclick="getAbilityDescription(${element.id})">
-  <div class="card-body radial-bg" style="--color1: var(--type${element.types[0]});
+  <div class="card-body p-0 rounded-5 radial-bg" style="--color1: var(--type${element.types[0]});
       --color2: var(--type${element.types[1] ? element.types[1] : 0})">
-    <div class="d-flex">
-      <div class="position-absolute text-center"><h5 >${element.name}</h5></div>
+
+      <div class="position-absolute text-center w-100"><h5 >${element.name}</h5></div>
+
+
+
+    <div class="d-flex align-items-center justify-content-center">
+
+     
       <img src="${
         element.sprite
       }" class="card-img-top position-absolute" alt="Pokemon Sprites">
-      <div class="div-color"      ></div> 
+      <div class="div-color w-50"      ></div> 
       
     </div>
-    <div class="card-footer p-0 d-flex justify-content-right">
+
+    <div class="d-flex justify-content-center p-0 justify-content-right gap-2">
       <p class="img"> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${
         element.types[0]
       }.png" class="" alt=""></p>
@@ -57,12 +64,12 @@ onclick="getAbilityDescription(${element.id})">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h1 class="fs-5">Pokedex #${element.id}</h1>
-        <div class="card">
-          <div class="background-img">
+        <h2 class="fs-4">Pokedex #${element.id}</h2>
+        <div class="card bg-transparent border-0">
+          <div class="background-img d-flex justify-content-center align-items-center">
             <img id="${element.id}modalPic" src="${
     element.sprite
-  }" class="card-img-modal mx-auto" alt="Pokemon Sprite">
+  }" class="card-img-modal mx-auto w-50 h-50" alt="Pokemon Sprite">
 
             <table class="table table-secondary">
   <thead>
@@ -73,58 +80,58 @@ onclick="getAbilityDescription(${element.id})">
     </tr>
   </thead>
   <tbody>
-    <tr  class="table-info fs-6">
+    <tr  class="table-info fs-7">
       <td>HP</td>
       <td>${element.stats[0]}</td>
       <td><div class="progress " role="progressbar" value="${
         element.stats[0]
       }" aria-valuemin="0" aria-valuemax="${maxStats.hp}">
-                      <div class="progress-bar" style="width: ${hpPercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${hpPercantage}%"></div>
                     </div></td>
     </tr>
-    <tr class="table-light fs-6">
+    <tr class="table-light fs-7">
       <td>Attack</td>
       <td>${element.stats[1]}</td>
       <td><div class="progress" role="progressbar" aria-valuenow="${
         element.stats[1]
       }" aria-valuemin="0" aria-valuemax="${maxStats.attack}">
-                      <div class="progress-bar" style="width: ${attackPercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${attackPercantage}%"></div>
                     </div></td>
     </tr>
-    <tr  class="table-info fs-6">
+    <tr  class="table-info fs-7">
       <td>Defense</td>
       <td>${element.stats[2]}</td>
       <td><div class="progress" role="progressbar" aria-valuenow="${
         element.stats[2]
       }" aria-valuemin="0" aria-valuemax="${maxStats.defense}">
-                      <div class="progress-bar" style="width: ${defensePercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${defensePercantage}%"></div>
                     </div></td>
     </tr>
-     <tr  class="table-light fs-6">
+     <tr  class="table-light fs-7">
       <td>Sp. Attack</td>
       <td>${element.stats[3]}</td>
       <td><div class="progress " role="progressbar" aria-valuenow="${
         element.stats[3]
       }" aria-valuemin="0" aria-valuemax="${maxStats["special-attack"]}">
-                      <div class="progress-bar" style="width: ${spAttackPercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${spAttackPercantage}%"></div>
                     </div></td>
     </tr>
-     <tr  class="table-info fs-6">
+     <tr  class="table-info fs-7">
       <td>Sp. Defense</td>
       <td>${element.stats[4]}</td>
       <td><div class="progress " role="progressbar" aria-valuenow="${
         element.stats[4]
       }" aria-valuemin="0" aria-valuemax="${maxStats["special-defense"]}">
-                      <div class="progress-bar" style="width: ${spDefensePercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${spDefensePercantage}%"></div>
                     </div></td>
     </tr>
-     <tr  class="table-light fs-6">
+     <tr  class="table-light fs-7">
       <td>Speed</td>
       <td>${element.stats[5]}</td>
       <td><div class="progress " role="progressbar" aria-valuenow="${
         element.stats[5]
       }" aria-valuemin="0" aria-valuemax="${maxStats.speed}">
-                      <div class="progress-bar" style="width: ${speedPercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${speedPercantage}%"></div>
                     </div></td>
     </tr>
   </tbody>
@@ -160,7 +167,7 @@ onclick="getAbilityDescription(${element.id})">
             <div class="accordion" id="${element.id}accordionExample">
               <div class="accordion-item">
                 <h2 class="accordion-header">
-                  <button class="accordion-button collapsed linear-bg fw-bold" style="--color1: var(--type${element.types[0]});
+                  <button class="accordion-button collapsed linear-bg fw-bold fs-6" style="--color1: var(--type${element.types[0]});
       --color2: var(--type${element.types[1] ? element.types[1] : 0})" type="button" data-bs-toggle="collapse" data-bs-target="#${
                     element.id
                   }collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -194,7 +201,7 @@ onclick="getAbilityDescription(${element.id})">
 
               <div class="accordion-item">
                 <h2 class="accordion-header">
-                  <button class="accordion-button collapsed linear-bg fw-bold" style="--color1: var(--type${element.types[0]});
+                  <button class="accordion-button collapsed linear-bg fw-bold fs-6" style="--color1: var(--type${element.types[0]});
       --color2: var(--type${element.types[1] ? element.types[1] : 0})" type="button" data-bs-toggle="collapse" data-bs-target="#${
                     element.id
                   }collapseOne" aria-expanded="false" aria-controls="${
@@ -229,7 +236,7 @@ onclick="getAbilityDescription(${element.id})">
                       <li class="list-group-item">HP: <output class="flexStat${
                         element.id
                       }">${element.stats[0]}</output></li>
-                      <div class="progress-bar" style="width: ${hpPercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${hpPercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${
@@ -240,7 +247,7 @@ onclick="getAbilityDescription(${element.id})">
                       }">Attack: <output class="flexStat${element.id}">${
     element.stats[1]
   }</output></li>
-                      <div class="progress-bar" style="width: ${attackPercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${attackPercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${
@@ -251,7 +258,7 @@ onclick="getAbilityDescription(${element.id})">
                       }">Defense: <output class="flexStat${element.id}">${
     element.stats[2]
   }</output></li>
-                      <div class="progress-bar" style="width: ${defensePercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${defensePercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${
@@ -264,7 +271,7 @@ onclick="getAbilityDescription(${element.id})">
                       }">Sp. Attack: <output class="flexStat${element.id}">${
     element.stats[3]
   }</output></li>
-                      <div class="progress-bar" style="width: ${spAttackPercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${spAttackPercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${
@@ -277,7 +284,7 @@ onclick="getAbilityDescription(${element.id})">
                       }">Sp. Defense: <output class="flexStat${element.id}">${
     element.stats[4]
   }</output></li>
-                      <div class="progress-bar" style="width: ${spDefensePercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${spDefensePercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${
@@ -288,7 +295,7 @@ onclick="getAbilityDescription(${element.id})">
                       }">Speed: <output class="flexStat${element.id}">${
     element.stats[5]
   }</output></li>
-                      <div class="progress-bar" style="width: ${speedPercantage}%"></div>
+                      <div class="progress-bar rounded-pill" style="width: ${speedPercantage}%"></div>
                     </div>
                   </div>
                 </div>

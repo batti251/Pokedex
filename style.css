@@ -23,27 +23,8 @@
   border-color: gold !important;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-
-}
-
 .no-scrollbar {
   overflow: hidden !important;
-}
-
-
-.gif-load{
-  width: 50%;
 }
 
 .loading-text{

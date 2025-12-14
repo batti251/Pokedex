@@ -9,15 +9,16 @@
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="style/bootstrap-customized.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/css/custom.css">
+   <!--  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
     <link rel="shortcut icon" href="assets/icons/icons8-pokemon-ball-64.png" type="image/x-icon">
   </head>
   <body onload="init()">
-    <nav class="navbar navbar-expand-lg navbar-light navbar-toggler justify-content-center">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-toggler justify-content-center rounded-0">
       <img
         src="assets/img/Pokedex.png"
         alt="Pokedex Bild"
-        class="mx-auto img-fluid"
+        class="mx-auto img-fluid w-25"
       />
       <form class="d-flex form-inline my-2 my-lg-0">
         <input
@@ -33,14 +34,14 @@
 
     <div id="overlaySpinner">
     <div class="z-1 position-fixed top-50 start-50 collapse"  id="loadingSpinner" role="status" >
-      <img class="gif-load position-fixed top-50 start-50 translate-middle" src="assets/img/Running-Pikachu-GIF.webp" 
+      <img class="gif-load w-50 position-fixed top-50 start-50 translate-middle" src="assets/img/Running-Pikachu-GIF.webp" 
       title="Pokemon icons created by Nikita Golubev - Flaticon">
       <span class="loading-text position-fixed start-50 translate-middle"></span>
       <span class="loader position-fixed translate-middle"></span>
     </div>
   </div>
     
-    <div id="main" class="row"></div>
+    <div id="main" class="row justify-content-center"></div>
 
     <div class="d-flex justify-content-center mt-5" ;>
       <button id="loadMoreButton" class="btn btn-warning btn-lg" type="button"  onclick="loadMorePokemon()" >
