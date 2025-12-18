@@ -1,5 +1,6 @@
 const maxStats = getMaxStats();
 
+
 function PokedexTemplate(element) {
   let arr = [
     element.stats[0],
@@ -9,6 +10,8 @@ function PokedexTemplate(element) {
     element.stats[4],
   ];
 
+console.log(arr);
+
   const hpPercantage = (element.stats[0] / maxStats.hp) * 100;
   const attackPercantage = (element.stats[1] / maxStats.attack) * 100;
   const defensePercantage = (element.stats[2] / maxStats.defense) * 100;
@@ -17,6 +20,15 @@ function PokedexTemplate(element) {
   const spDefensePercantage =
     (element.stats[4] / maxStats["special-defense"]) * 100;
   const speedPercantage = (element.stats[5] / maxStats.speed) * 100;
+
+  const hpLevelOne = Math.floor(2*Number(element.stats[0])/100 * Number(1)) + Number(1) + 10;
+  const attackLevelOne = Math.floor(2*Number(element.stats[1])/100 * Number(1)) + 5;
+  const defenseLevelOne = Math.floor(2*Number(element.stats[2])/100 * Number(1)) + 5;
+  const spAttackLevelOne = Math.floor(2*Number(element.stats[3])/100 * Number(1)) + 5;
+  const spDefenseLevelOne = Math.floor(2*Number(element.stats[4])/100 * Number(1)) + 5;
+  const speedLevelOne = Math.floor(2*Number(element.stats[5])/100 * Number(1)) + 5;
+
+
   return `
 <div type="button" class="text-capitalize col-2 card menu pr-0 poke-list m-2 bg-transparent border-0" id="${
     element.id
@@ -137,7 +149,6 @@ onclick="getAbilityDescription(${element.id})">
   </tbody>
 </table>
 
-
           </div>
             <div class="row">
               <div class=" mb-sm-0 col-md-3 w-100 p-3 linear-diag-bg" style="--bs-bg-opacity: .5; --color1: var(--type${element.types[0]});
@@ -235,7 +246,7 @@ onclick="getAbilityDescription(${element.id})">
                     }" aria-valuemin="0" aria-valuemax="${maxStats.hp}">
                       <li class="list-group-item">HP: <output class="flexStat${
                         element.id
-                      }">${element.stats[0]}</output></li>
+                      }">${hpLevelOne}</output></li>
                       <div class="progress-bar rounded-pill" style="width: ${hpPercantage}%"></div>
                     </div>
 
@@ -244,9 +255,7 @@ onclick="getAbilityDescription(${element.id})">
                     }" aria-valuemin="0" aria-valuemax="${maxStats.attack}">
                       <li class="list-group-item${
                         element.id
-                      }">Attack: <output class="flexStat${element.id}">${
-    element.stats[1]
-  }</output></li>
+                      }">Attack:<output class="flexStat${element.id}">${attackLevelOne}</output></li>
                       <div class="progress-bar rounded-pill" style="width: ${attackPercantage}%"></div>
                     </div>
 
@@ -256,13 +265,13 @@ onclick="getAbilityDescription(${element.id})">
                       <li class="list-group-item${
                         element.id
                       }">Defense: <output class="flexStat${element.id}">${
-    element.stats[2]
+    defenseLevelOne
   }</output></li>
                       <div class="progress-bar rounded-pill" style="width: ${defensePercantage}%"></div>
                     </div>
 
                     <div class="progress" role="progressbar" aria-valuenow="${
-                      element.stats[3]
+                     spAttackLevelOne
                     }" aria-valuemin="0" aria-valuemax="${
     maxStats["special-attack"]
   }">
@@ -282,7 +291,7 @@ onclick="getAbilityDescription(${element.id})">
                       <li class="list-group-item${
                         element.id
                       }">Sp. Defense: <output class="flexStat${element.id}">${
-    element.stats[4]
+    spDefenseLevelOne
   }</output></li>
                       <div class="progress-bar rounded-pill" style="width: ${spDefensePercantage}%"></div>
                     </div>
@@ -293,7 +302,7 @@ onclick="getAbilityDescription(${element.id})">
                       <li class="list-group-item${
                         element.id
                       }">Speed: <output class="flexStat${element.id}">${
-    element.stats[5]
+    speedLevelOne
   }</output></li>
                       <div class="progress-bar rounded-pill" style="width: ${speedPercantage}%"></div>
                     </div>

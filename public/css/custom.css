@@ -8845,6 +8845,7 @@ textarea.form-control-lg {
 
 .rounded-pill {
   border-radius: var(--bs-border-radius-pill) !important;
+  border-style: double;
 }
 
 .rounded-top {
