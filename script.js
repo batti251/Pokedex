@@ -226,6 +226,7 @@ function calculateNewStats(id,calculatedStat,input) {
   )
 }
 
+
 /**
  * This Function updates the stat-values in the output field of the list-group-item, according to the set Level 
  * 
@@ -237,7 +238,6 @@ function updateStatHTML(id, calculatedStat) {
   html.forEach((element, index) => {
     element.textContent = calculatedStat[index]
   });
-  
 }
 
 

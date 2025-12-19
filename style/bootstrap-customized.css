@@ -124,3 +124,8 @@ li[class~="list-group-item"]{
   animation-duration: 2s !important;
 }
 
+
+[class*="list-group-item"]{
+  width: 88px;
+}
+
